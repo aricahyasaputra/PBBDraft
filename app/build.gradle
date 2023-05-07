@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
 }
 
 android {
@@ -19,6 +18,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -60,4 +62,6 @@ dependencies {
     // Material Design
     def material_version = "1.2.1"
     implementation "com.google.android.material:material:$material_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 }

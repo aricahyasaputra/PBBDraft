@@ -3,41 +3,42 @@ package com.example.pbbdraft.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
-import com.example.pbbdraft.R
 import com.example.pbbdraft.room.PBB
-import kotlinx.android.synthetic.main.adapter_pbb.view.*
-
+import com.example.pbbdraft.databinding.AdapterPbbBinding
 
 class PBBAdapter (private val pajaks: ArrayList<PBB>, private val listener: OnAdapterListener)
     : RecyclerView.Adapter<PBBAdapter.pajakViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): pajakViewHolder {
-        return pajakViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_pbb, parent, false)
-        )
+        val binding = AdapterPbbBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return pajakViewHolder(binding)
     }
 
     override fun getItemCount() = pajaks.size
     override fun onBindViewHolder(holder: pajakViewHolder, position: Int) {
-        val pajak = pajaks[position]
-        holder.view.text_title.text = pajak.nama
-        holder.view.NOP.text = pajak.NOP
-        holder.view.Alamat.text = pajak.alamat
-        holder.view.luasTanah.text = pajak.luasTanah.toString()
-        holder.view.pajakDitetapkan.text = pajak.pajakDitetapkan.toString()
-        holder.view.text_title.setOnClickListener{
-            listener.onClik( pajak )
+        with(holder){
+            val pajak = pajaks[position]
+
+            holder.binding.textTitle.text = pajak.nama
+            holder.binding.NOP.text = pajak.NOP
+            holder.binding.Alamat.text = pajak.alamat
+            holder.binding.luasTanah.text = pajak.luasTanah.toString()
+            holder.binding.pajakDitetapkan.text = pajak.pajakDitetapkan.toString()
+            holder.binding.textTitle.setOnClickListener{
+                listener.onClik( pajak )
+            }
+            holder.binding.iconEdit.setOnClickListener{
+                listener.onUpdate( pajak )
+            }
+            holder.binding.iconDelete.setOnClickListener{
+                listener.onDelete( pajak )
+            }
         }
-        holder.view.icon_edit.setOnClickListener{
-            listener.onUpdate( pajak )
-        }
-        holder.view.icon_delete.setOnClickListener{
-            listener.onDelete( pajak )
-        }
+
     }
-    class pajakViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class pajakViewHolder(val binding: AdapterPbbBinding) : RecyclerView.ViewHolder(binding.root)
     fun setData(list: List<PBB>){
         pajaks.clear()
         pajaks.addAll(list)

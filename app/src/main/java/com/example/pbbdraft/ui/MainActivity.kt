@@ -9,17 +9,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pbbdraft.databinding.ActivityMainBinding
 import com.example.pbbdraft.room.Constant
 import com.example.pbbdraft.room.PBB
 import com.example.pbbdraft.room.PBBDB
 import com.example.pbbdraft.ui.PBBAdapter
-import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     val db by lazy { PBBDB(this) }
@@ -27,8 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setContentView(R.layout.activity_main)
         setupListener()
         setupRecyclerView()
 
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupListener(){
-        button_create.setOnClickListener {
+        binding.buttonCreate.setOnClickListener {
             intentEdit(0, Constant.TYPE_CREATE)
         }
     }
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        list_pajak.apply {
+        binding.listPajak.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = PBBAdapter
         }
