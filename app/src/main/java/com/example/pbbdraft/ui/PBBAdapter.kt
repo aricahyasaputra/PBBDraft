@@ -3,13 +3,15 @@ package com.example.pbbdraft.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pbbdraft.room.PBB
+import com.example.pbbdraft.databinding.ActivityMainBinding
 import com.example.pbbdraft.databinding.AdapterPbbBinding
+import com.example.pbbdraft.room.PBB
+
 
 class PBBAdapter (private val pajaks: ArrayList<PBB>, private val listener: OnAdapterListener)
     : RecyclerView.Adapter<PBBAdapter.pajakViewHolder>(){
 
-
+    private lateinit var binding: AdapterPbbBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): pajakViewHolder {
         val binding = AdapterPbbBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,14 +21,14 @@ class PBBAdapter (private val pajaks: ArrayList<PBB>, private val listener: OnAd
     override fun getItemCount() = pajaks.size
     override fun onBindViewHolder(holder: pajakViewHolder, position: Int) {
         with(holder){
-            val pajak = pajaks[position]
+           val pajak = pajaks[position]
 
-            holder.binding.textTitle.text = pajak.nama
+            holder.binding.namaPemilik.text = pajak.namaWajibPajak
             holder.binding.NOP.text = pajak.NOP
-            holder.binding.Alamat.text = pajak.alamat
-            holder.binding.luasTanah.text = pajak.luasTanah.toString()
+            holder.binding.Alamat.text = pajak.alamatObjekPajak
+            holder.binding.luasTanah.text = pajak.luasObjekPajak.toString()
             holder.binding.pajakDitetapkan.text = pajak.pajakDitetapkan.toString()
-            holder.binding.textTitle.setOnClickListener{
+            holder.binding.namaPemilik.setOnClickListener{
                 listener.onClik( pajak )
             }
             holder.binding.iconEdit.setOnClickListener{

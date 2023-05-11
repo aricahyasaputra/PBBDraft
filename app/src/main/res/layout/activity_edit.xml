@@ -18,68 +18,136 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+
+    <EditText
+        android:id="@+id/edit_blok"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="48dp"
+        android:hint="Nomor blok Tanah"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_NOP" />
+
+    <EditText
+        android:id="@+id/edit_persil"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="60dp"
+        android:hint="Nomor persil Tanah"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_blok" />
+
     <EditText
         android:id="@+id/edit_nama"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
         android:gravity="top"
         android:hint="Nama Wajib Pajak"
         android:minLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_NOP" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_persil" />
 
     <EditText
-        android:id="@+id/edit_alamat"
+        android:id="@+id/edit_alamat_wajib_pajak"
         android:layout_width="0dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="48dp"
         android:gravity="top"
         android:hint="Alamat Wajib Pajak"
-        android:minLines="3"
+        android:minLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_nama" />
+
+    <EditText
+        android:id="@+id/edit_alamat_objek_pajak"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="top"
+        android:hint="Alamat objek Pajak"
+        android:minLines="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_alamat_wajib_pajak" />
+
+    <EditText
+        android:id="@+id/edit_kelas"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="top"
+        android:hint="Kelas Tanah"
+        android:minLines="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_alamat_objek_pajak" />
 
     <EditText
         android:id="@+id/edit_luas"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
         android:gravity="top"
-        android:hint="Luas Bumi (m^2)"
+        android:hint="Luas Objek Tanah (m^2)"
         android:minLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_alamat" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_kelas" />
 
     <EditText
         android:id="@+id/edit_pajak_ditetapkan"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
         android:gravity="top"
         android:hint="Jumlah Pajak"
         android:minLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_luas" />
+
+    <EditText
+        android:id="@+id/edit_sejarah_tanah"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="top"
+        android:hint="Sejarah Tanah"
+        android:minLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_pajak_ditetapkan" />
+    <EditText
+        android:id="@+id/edit_lat"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="top"
+        android:hint="Latitude Objek Pajak"
+        android:minLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_sejarah_tanah" />
+    <EditText
+        android:id="@+id/edit_lng"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="top"
+        android:hint="Longitude Objek Pajak"
+        android:minLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_lat" />
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="4dp"
         android:text="SAVE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_pajak_ditetapkan" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_lng" />
 
     <Button
         android:id="@+id/button_update"

@@ -14,12 +14,12 @@ interface PBBDao {
     @Delete
     suspend fun deletePajak(pajak: PBB)
 
-    @Query("SELECT * FROM pbb")
+    @Query("SELECT * FROM blok6")
     suspend fun getPajaks(): List<PBB>
 
-    @Query("SELECT * FROM pbb WHERE id=:pajak_id")
-    suspend fun getPajak(pajak_id: Int): List<PBB>
+    @Query("SELECT * FROM blok6 WHERE no=:no")
+    suspend fun getPajak(no: Int): List<PBB>
 
-    @Query("SELECT * FROM pbb WHERE nama LIKE :searchQuery OR NOP LIKE :searchQuery")
-    suspend fun searchPajak(searchQuery: String): List<PBB>
+    //@Query("SELECT * FROM 'blok6' WHERE nama LIKE :searchQuery OR NOP LIKE :searchQuery")
+    //suspend fun searchPajak(searchQuery: String): List<PBB>
 }

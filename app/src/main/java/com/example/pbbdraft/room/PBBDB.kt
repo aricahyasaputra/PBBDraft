@@ -7,7 +7,9 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [PBB::class],
-    version = 1
+    version = 1,
+    exportSchema = false
+
 )
 abstract class PBBDB : RoomDatabase(){
 
@@ -27,8 +29,8 @@ abstract class PBBDB : RoomDatabase(){
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
             PBBDB::class.java,
-            "pajakpenduduk.db"
-        ).createFromAsset("database/pajakpenduduk.db").build()
+            "datapajak"
+        ).createFromAsset("database/sample.db").build()
 
     }
 }

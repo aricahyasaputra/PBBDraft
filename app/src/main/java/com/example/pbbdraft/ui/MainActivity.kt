@@ -19,10 +19,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private lateinit var binding: ActivityMainBinding
-class MainActivity : AppCompatActivity() {
 
-    val db by lazy { PBBDB(this) }
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
+    val db by lazy { PBBDB(this)}
     lateinit var PBBAdapter: PBBAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     fun setupListener(){
         binding.buttonCreate.setOnClickListener {
             intentEdit(0, Constant.TYPE_CREATE)
@@ -67,11 +67,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView(){
         PBBAdapter = PBBAdapter(arrayListOf(), object : PBBAdapter.OnAdapterListener{
             override fun onClik(pajak: PBB) {
-                intentEdit(pajak.id, Constant.TYPE_READ)
+                intentEdit(pajak.no, Constant.TYPE_READ)
             }
 
             override fun onUpdate(pajak: PBB) {
-                intentEdit(pajak.id, Constant.TYPE_UPDATE)
+                intentEdit(pajak.no, Constant.TYPE_UPDATE)
             }
 
             override fun onDelete(pajak: PBB) {
