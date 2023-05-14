@@ -1,0 +1,98 @@
+package com.example.pbbdraft.ui
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pbbdraft.databinding.ActivitySearchBinding
+import com.example.pbbdraft.room.Constant
+import com.example.pbbdraft.room.PBB
+import com.example.pbbdraft.room.PBBDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+class SearchActivity : AppCompatActivity() {
+    private lateinit var binding:ActivitySearchBinding
+    lateinit var PBBAdapter: PBBAdapter
+    val db by lazy { PBBDB(this) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        setupListener()
+        setupRecyclerView()
+    }
+    override fun onStart(){
+        super.onStart()
+        loadPajak()
+    }
+
+    fun loadPajak(){
+        CoroutineScope(Dispatchers.IO).launch{
+            val pajaks = db.PBBDao().getPajaks()
+            Log.d("MainActivity", "dbResponse: $pajaks")
+            withContext(Dispatchers.Main){
+                PBBAdapter.setData( pajaks )
+            }
+        }
+    }
+    fun setupListener(){
+        binding.buttonCreate.setOnClickListener {
+            intentEdit(0, Constant.TYPE_CREATE)
+        }
+    }
+
+    fun intentEdit(pajakId: Int, intentType: Int){
+        startActivity(
+            Intent(applicationContext, EditActivity::class.java)
+                .putExtra("intent_id", pajakId)
+                .putExtra("intent_type", intentType)
+        )
+    }
+
+    private fun setupRecyclerView(){
+        PBBAdapter = PBBAdapter(arrayListOf(), object : PBBAdapter.OnAdapterListener{
+            override fun onClik(pajak: PBB) {
+                intentEdit(pajak.no, Constant.TYPE_READ)
+            }
+
+            override fun onUpdate(pajak: PBB) {
+                intentEdit(pajak.no, Constant.TYPE_UPDATE)
+            }
+
+            override fun onDelete(pajak: PBB) {
+                deleteDialog(pajak)
+            }
+
+        })
+        binding.listPajak.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            adapter = PBBAdapter
+        }
+    }
+
+    private fun deleteDialog(pajak: PBB){
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.apply {
+            setTitle("Konfirmasi")
+            setMessage("Yakin hapus ${pajak.NOP}?")
+            setNegativeButton("Batal"){ dialogInterface, i ->
+                dialogInterface.dismiss()
+            }
+            setPositiveButton("Hapus"){ dialogInterface, i ->
+                dialogInterface.dismiss()
+                CoroutineScope(Dispatchers.IO).launch{
+                    db.PBBDao().deletePajak(pajak)
+                    loadPajak()
+                }
+            }
+        }
+        alertDialog.show()
+    }
+}

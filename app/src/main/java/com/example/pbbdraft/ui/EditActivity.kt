@@ -1,4 +1,4 @@
-package com.example.pbbdraft
+package com.example.pbbdraft.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

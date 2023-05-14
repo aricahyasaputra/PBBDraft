@@ -30,7 +30,7 @@ abstract class PBBDB : RoomDatabase(){
             context.applicationContext,
             PBBDB::class.java,
             "datapajak"
-        ).createFromAsset("database/sample.db").build()
+        ).createFromAsset("database/sample.db").allowMainThreadQueries().build()
 
     }
 }

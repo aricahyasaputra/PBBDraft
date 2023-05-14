@@ -16,6 +16,8 @@ interface PBBDao {
 
     @Query("SELECT * FROM blok6")
     suspend fun getPajaks(): List<PBB>
+    @Query("SELECT * FROM blok6")
+    fun getPajaksnow(): List<PBB>
 
     @Query("SELECT * FROM blok6 WHERE no=:no")
     suspend fun getPajak(no: Int): List<PBB>
