@@ -83,8 +83,11 @@
 		//console.log(json)
 		map.setView([968, 1064], -2);
 		dataPajak.forEach((data) => {
-			if(data.lat!=0||data.lng!=0) new L.Marker([data.lat, data.lng]).bindPopup(`<label for="namaLine">NOP ${data.NOP}:</label><br>`+
-			`<input type='button' value='Tampilkan' class='marker-display-button' onclick="console.log('Nama : ${data.namaWajibPajak}')"/>`).bindTooltip(`${data.namaWajibPajak}`,
+			if(data.lat!=0||data.lng!=0) new L.Marker([data.lat, data.lng]).bindPopup(`<label>NOP : ${data.NOP}</label><br>`+
+			`<label>Nama : ${data.namaWajibPajak}</label><br>` +
+			`<label>Luas : ${data.luasObjekPajak} m²</label><br>` +
+			`<label>Jumlah Pajak : Rp.${data.pajakDitetapkan}</label><br>` +
+			`<input type='button' value='Tampilkan Selengkapnya' class='marker-display-button' onclick="Android.tampilkanDataPajak(${data.no})"/>`).bindTooltip(`${data.namaWajibPajak}`,
             {
                 permanent: true,
                 direction: 'center'

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Home">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:text="Halaman utama"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+
+        />
+
+    <ImageView
+        android:layout_marginTop="75dp"
+        android:id="@+id/search_activity"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/ic_search" />
+    <ImageView
+        android:id="@+id/map_activity"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginStart="92dp"
+        android:src="@drawable/ic_map" />
+    <ImageView
+        android:id="@+id/upload_database_activity"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginStart="180dp"
+        android:src="@drawable/ic_archive" />
+
+</FrameLayout>

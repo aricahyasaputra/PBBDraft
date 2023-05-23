@@ -22,6 +22,12 @@ interface PBBDao {
     @Query("SELECT * FROM blok6 WHERE no=:no")
     suspend fun getPajak(no: Int): List<PBB>
 
+    @Query("DELETE FROM blok6")
+    fun deletePajakAll()
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name='blok6'")
+    fun resetPrimaryKey()
+
     //@Query("SELECT * FROM 'blok6' WHERE nama LIKE :searchQuery OR NOP LIKE :searchQuery")
     //suspend fun searchPajak(searchQuery: String): List<PBB>
 }

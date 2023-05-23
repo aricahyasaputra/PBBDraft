@@ -17,21 +17,10 @@
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="30dp">
 
-        <ImageView
-            android:id="@+id/search_activity"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginBottom="32dp"
-            android:src="@drawable/ic_search" />
-        <ImageView
-            android:id="@+id/map_activity"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginBottom="32dp"
-            android:layout_marginStart="72dp"
-            android:src="@drawable/ic_map" />
+
 
 
     </FrameLayout>

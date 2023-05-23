@@ -1,18 +1,18 @@
 package com.example.pbbdraft.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.webkit.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.webkit.WebViewAssetLoader
 import com.example.pbbdraft.databinding.ActivityMapBinding
 import com.example.pbbdraft.mapdata.main
 import com.example.pbbdraft.room.PBBDB
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -55,12 +55,20 @@ fun main(no: Int,
     return string
 }
 
-class WebAppInterface(private val pajakJson: String) {
-
-
+class WebAppInterface(private val pajakJson: String, context: Context) {
+     val appContext : Context = context
     @JavascriptInterface
     fun tampilkanString() :String{
         return pajakJson
+    }
+    @JavascriptInterface
+    fun tampilkanDataPajak(id:Int){
+        Handler(Looper.getMainLooper()).post {
+            //Log.i("hasil", appContext.toString())
+            val editintent = Intent(appContext, EditActivity::class.java).putExtra("intent_id", id).putExtra("intent_type", 0)
+            appContext.startActivity(editintent)
+        }
+
     }
 }
 
@@ -96,7 +104,7 @@ class MapActivity : AppCompatActivity() {
         binding.webView.settings.setSupportZoom(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
-        binding.webView.addJavascriptInterface(WebAppInterface(hasilLoad), "Android")
+        binding.webView.addJavascriptInterface(WebAppInterface(hasilLoad, this), "Android")
         //binding.webView.loadUrl("file:///android_asset/javascriptMap/perblok.html")
         //binding.webView.loadUrl("file:///android_asset/javascriptMap/skripsi.html")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/javascriptMap/skripsi.html")
@@ -127,4 +135,5 @@ class MapActivity : AppCompatActivity() {
         Log.i("konfig web", pajaksConvert.toString())
         return pajaksConvert.toString()
     }
+
 }

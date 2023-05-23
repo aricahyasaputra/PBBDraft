@@ -3,6 +3,8 @@ package com.example.pbbdraft.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityMainBinding
 import com.example.pbbdraft.mapdata.MapAdapter
 
@@ -18,20 +20,29 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        replaceFragment(Home())
 
-        binding.searchActivity.setOnClickListener {
-            startActivity(
-                Intent(applicationContext, SearchActivity::class.java)
-            )
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.Home -> replaceFragment(Home())
+                R.id.Archive -> replaceFragment(Archive())
+                R.id.Setting -> replaceFragment(Profile())
+            else -> {
+
+            }
+
+            }
+            true
         }
-        binding.mapActivity.setOnClickListener {
-            startActivity(
-                Intent(applicationContext, MapActivity::class.java)
-            )
-            /*startActivity(
-                Intent(applicationContext, MapAdapter::class.java)
-            )*/
-        }
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
 
     }
 
