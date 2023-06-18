@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Home">
+    tools:context=".ui.Home"
+    android:padding="15dp"
+    android:background="@color/grey">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,28 +16,111 @@
         android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold"
-
-        />
+        android:background="@drawable/bg_grey_white_rectangle"
+        android:paddingHorizontal="20dp"/>
 
     <ImageView
         android:layout_marginTop="75dp"
         android:id="@+id/search_activity"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/ic_search" />
+        android:padding="10dp"
+        android:layout_gravity="left"
+        android:src="@drawable/ic_search"
+        android:background="@drawable/bg_grey_white_rectangle" />
     <ImageView
         android:id="@+id/map_activity"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginTop="75dp"
-        android:layout_marginStart="92dp"
-        android:src="@drawable/ic_map" />
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_map"
+        android:background="@drawable/bg_grey_white_rectangle"/>
     <ImageView
         android:id="@+id/upload_database_activity"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginTop="75dp"
-        android:layout_marginStart="180dp"
-        android:src="@drawable/ic_archive" />
+        android:padding="10dp"
+        android:src="@drawable/ic_archive"
+        android:layout_gravity="right"
+        android:background="@drawable/bg_grey_white_rectangle"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Total Pajak Tertanggung"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Rp.36.089.145"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:text="1145 Petak"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Total Pajak Yang Sudah Terbayar"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Rp.26.789.130"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="90dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:text="867 Petak"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="90dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Total Pajak Yang Belum Terbayar"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="120dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Rp.9.300.015"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="150dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:text="278 Petak"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="150dp"/>
 </FrameLayout>

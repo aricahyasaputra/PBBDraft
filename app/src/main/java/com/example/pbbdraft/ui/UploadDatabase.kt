@@ -15,6 +15,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityUploadDatabaseBinding
 import com.example.pbbdraft.room.PBB
@@ -59,7 +60,7 @@ class UploadDatabase : AppCompatActivity() {
             //
 
             setupCSV()
-            val pajaks = db.PBBDao().getPajaksnow()
+            val pajaks = db.PBBDao().getPajaksnow(SimpleSQLiteQuery("SELECT * FROM blok6"))
             val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "backup" + System.currentTimeMillis().toString() + ".xlsx"
 
             val xlWb = XSSFWorkbook()
@@ -112,8 +113,8 @@ class UploadDatabase : AppCompatActivity() {
     }
 
     private fun importDatabase(uri: Uri){
-        db.PBBDao().deletePajakAll()
-        db.PBBDao().resetPrimaryKey()
+        //db.PBBDao().deletePajakAll()
+        //db.PBBDao().resetPrimaryKey()
 
         val inputStream = contentResolver.openInputStream(uri)
         val xlWb = WorkbookFactory.create(inputStream)

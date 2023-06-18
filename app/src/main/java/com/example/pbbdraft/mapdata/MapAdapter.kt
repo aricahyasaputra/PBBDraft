@@ -22,8 +22,8 @@ class MapAdapter: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadPajak()
-
+        //loadPajak()
+    }
 
 
 /*        class WebAppInterface(private val mContext: Context, private val listAngka: List<Int> = numbers) {
@@ -46,12 +46,15 @@ class MapAdapter: AppCompatActivity() {
             val pajaks = db.PBBDao().getPajaks()
         }*/
     }
+/*
     fun loadPajak(){
         CoroutineScope(Dispatchers.IO).launch{
             val pajaks = db.PBBDao().getPajaks()
 
             //var pajaksConvert = MutableList<PBB>()
-            /*pajaksConvert.*/
+            */
+/*pajaksConvert.*//*
+
             pajaks.forEachIndexed({index, element ->
                 PBB(element.no, element.NOP, element.blok, element.persil, element.namaWajibPajak, element.alamatWajibPajak, element.alamatObjekPajak, element.kelas, element.luasObjekPajak, element.pajakDitetapkan, element.sejarahObjekPajak, element.lat, element.lng)
 
@@ -59,4 +62,4 @@ class MapAdapter: AppCompatActivity() {
             //val pajaksJson = ListPBB(pajaks)
         }
     }
-}
+}*/

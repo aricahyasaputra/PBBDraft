@@ -1,12 +1,15 @@
 package com.example.pbbdraft.room
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface PBBDao {
 
     @Insert
     suspend fun addPajak(pajak: PBB)
+    @Update
+    suspend fun updateProfile(profile: Profile)
 
     @Update
     suspend fun updatePajak(pajak: PBB)
@@ -14,16 +17,20 @@ interface PBBDao {
     @Delete
     suspend fun deletePajak(pajak: PBB)
 
-    @Query("SELECT * FROM blok6")
-    suspend fun getPajaks(): List<PBB>
-    @Query("SELECT * FROM blok6")
-    fun getPajaksnow(): List<PBB>
+    @RawQuery
+    suspend fun getPajaks(query: SupportSQLiteQuery): List<PBB>
+    //Query("SELECT * FROM blok6")
+    @Query("SELECT * FROM temp WHERE id=1")
+    fun getProfile(): List<Profile>
 
-    @Query("SELECT * FROM blok6 WHERE no=:no")
-    suspend fun getPajak(no: Int): List<PBB>
+    @RawQuery
+    fun getPajaksnow(query: SupportSQLiteQuery): List<PBB>
 
-    @Query("DELETE FROM blok6")
-    fun deletePajakAll()
+    @RawQuery
+    suspend fun getPajak(query: SupportSQLiteQuery): List<PBB>
+
+/*    @Query("DELETE FROM blok6")
+    fun deletePajakAll()*/
 
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name='blok6'")
     fun resetPrimaryKey()

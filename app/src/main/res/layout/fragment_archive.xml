@@ -3,12 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@drawable/bg_light_green_rectangle"
     tools:context=".ui.Archive">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_petabloklengkap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello Archive" />
+        android:layout_height="250dp">
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/photo_view_petabloklengkap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_person"
+                android:background="@drawable/bg_dark_green_rectangle_cornered"/>
+                <ImageView
+                    android:id="@+id/fullscreen_petabloklengkap"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_fullscreen_in"
+                    android:layout_gravity="bottom|right"/>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/tombol_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FUllscreen"
+        android:layout_gravity="bottom"/>
 
 </FrameLayout>

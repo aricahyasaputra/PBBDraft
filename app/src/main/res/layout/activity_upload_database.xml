@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".ui.UploadDatabase">
 
     <Button
         android:id="@+id/upload_database"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Export"
         app:layout_constraintBottom_toTopOf="@+id/import_database"
@@ -18,7 +19,7 @@
 
     <Button
         android:id="@+id/import_database"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:text="Import"

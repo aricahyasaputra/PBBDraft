@@ -1,12 +1,15 @@
 package com.example.pbbdraft.ui
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.pbbdraft.room.PBBDB
 import com.example.pbbdraft.room.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -30,20 +33,30 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
         val view = binding.root
+        //Menampilkan layout
         setContentView(view)
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+/*        //Menampilkan tombol update/save/export
         setupView()
-        setupListener()
+        //Setup Onclick Listener tombol update/save
+
         setupPDF()
+        //Inisialisasi pajak id dari activity sebelumnya*/
+        setupListener()
+        //Setup Onclick Listener tombol export
         pajakId = intent.getIntExtra("intent_id", 0)
-        Toast.makeText(this, pajakId.toString(), Toast.LENGTH_SHORT).show()
+        //Log.i("Pajak id", pajakId.toString())
+        getPajak()
     }
 
-    fun setupView(){
+
+/*    fun setupView(){
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val intentType = intent.getIntExtra("intent_type", 0)
         when (intentType){
             Constant.TYPE_CREATE -> {
                 binding.buttonUpdate.visibility = View.GONE
+                binding.buttonExport.visibility = View.GONE
             }
             Constant.TYPE_READ -> {
                 binding.buttonSave.visibility = View.GONE
@@ -55,21 +68,24 @@ class EditActivity : AppCompatActivity() {
                 getPajak()
             }
         }
-    }
+    }*/
 
     fun setupListener(){
-        binding.buttonSave.setOnClickListener{
+/*        binding.buttonSave.setOnClickListener{
             CoroutineScope(Dispatchers.IO).launch{
                 db.PBBDao().addPajak(
                     PBB(0, binding.editNOP.text.toString(), binding.editBlok.text.toString().toInt(), binding.editPersil.text.toString(), binding.editNama.text.toString(), binding.editAlamatWajibPajak.text.toString(), binding.editAlamatObjekPajak.text.toString(), binding.editKelas.text.toString(), binding.editLuas.text.toString().toInt(), binding.editPajakDitetapkan.text.toString().toInt(), binding.editSejarahTanah.text.toString(), binding.editLat.text.toString().toFloat(), binding.editLng.text.toString().toFloat())
                 )
                 finish()
             }
-        }
+        }*/
         binding.buttonUpdate.setOnClickListener{
             CoroutineScope(Dispatchers.IO).launch{
-                db.PBBDao().updatePajak(
-                    PBB(pajakId, binding.editNOP.text.toString(), binding.editBlok.text.toString().toInt(), binding.editPersil.text.toString(), binding.editNama.text.toString(), binding.editAlamatWajibPajak.text.toString(), binding.editAlamatObjekPajak.text.toString(), binding.editKelas.text.toString(), binding.editLuas.text.toString().toInt(), binding.editPajakDitetapkan.text.toString().toInt(), binding.editSejarahTanah.text.toString(), binding.editLat.text.toString().toFloat(), binding.editLng.text.toString().toFloat())
+                //, blok=:${binding.editTextBlok.text}, persil=:${binding.editTextPersil.text}, namaWajibPajak=:${binding.editTextNamaWajibPajak.text}, alamatWajibPajak=:${binding.editTextAlamatWajibPajak.text}, alamatObjekPajak=:${binding.editTextAlamatObjekPajak.text}, kelas=:${binding.editTextKelas.text}, luasObjekPajak=:${binding.editTextLuas.text}, pajakDitetapkan=:${binding.editTextTotalWajibPajak.text}, sejarahObjekPajak=:${binding.editTextSejarahPajak.text}, lat=:${binding.editTextLat.text.toString().toFloat()}, lng=:${binding.editTextLng.text.toString().toFloat()}
+                db.PBBDao().updatePajak(PBB(pajakId, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat()))
+                startActivity(
+                    Intent(applicationContext, ViewActivity::class.java)
+                        .putExtra("intent_id", pajakId)
                 )
                 finish()
             }
@@ -78,19 +94,20 @@ class EditActivity : AppCompatActivity() {
     fun getPajak(){
         pajakId = intent.getIntExtra("intent_id", 0)
         CoroutineScope(Dispatchers.IO).launch{
-            val pajaks = db.PBBDao().getPajak( pajakId )[0]
-            binding.editNOP.setText( pajaks.NOP )
-            binding.editBlok.setText( pajaks.blok.toString() )
-            binding.editPersil.setText( pajaks.persil)
-            binding.editNama.setText( pajaks.namaWajibPajak )
-            binding.editAlamatWajibPajak.setText( pajaks.alamatWajibPajak )
-            binding.editAlamatObjekPajak.setText( pajaks.alamatObjekPajak )
-            binding.editKelas.setText( pajaks.kelas )
-            binding.editLuas.setText( pajaks.luasObjekPajak.toString() )
-            binding.editPajakDitetapkan.setText( pajaks.pajakDitetapkan.toString() )
-            binding.editSejarahTanah.setText( pajaks.sejarahObjekPajak )
-            binding.editLat.setText( pajaks.lat.toString() )
-            binding.editLng.setText( pajaks.lng.toString() )
+            val pajaks = db.PBBDao().getPajak( SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE no=${pajakId}") )[0]
+            binding.editTextNOP.setText(pajaks.NOP)
+            binding.editTextBlok.setText( pajaks.blok.toString() )
+            binding.editTextPersil.setText( pajaks.persil)
+            binding.editTextNamaWajibPajak.setText( pajaks.namaWajibPajak )
+            binding.editTextAlamatWajibPajak.setText( pajaks.alamatWajibPajak )
+            binding.editTextAlamatObjekPajak.setText( pajaks.alamatObjekPajak )
+            binding.editTextKelas.setText( pajaks.kelas )
+            binding.editTextLuas.setText( pajaks.luasObjekPajak.toString() )
+            binding.editTextTotalWajibPajak.setText( pajaks.pajakDitetapkan.toString() )
+            binding.editTextSejarahPajak.setText( pajaks.sejarahObjekPajak )
+            binding.editTextJenisPbb.setText( "PBB" )
+            binding.editTextLat.setText( pajaks.lat.toString() )
+            binding.editTextLng.setText( pajaks.lng.toString() )
 
         }
     }
@@ -99,7 +116,7 @@ class EditActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-    fun setupPDF(){
+/*    fun setupPDF(){
         binding.buttonExport.setOnClickListener{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                 if(checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
@@ -139,5 +156,5 @@ class EditActivity : AppCompatActivity() {
         }catch (e: Exception){
             Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show()
         }
-    }
+    }*/
 }

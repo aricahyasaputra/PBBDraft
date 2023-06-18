@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [PBB::class],
+    entities = [PBB::class, Profile::class],
     version = 1,
     exportSchema = false
 

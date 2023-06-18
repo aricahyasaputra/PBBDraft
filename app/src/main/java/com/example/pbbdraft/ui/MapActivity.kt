@@ -9,6 +9,7 @@ import android.util.Log
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.webkit.WebViewAssetLoader
 import com.example.pbbdraft.databinding.ActivityMapBinding
 import com.example.pbbdraft.mapdata.main
@@ -55,11 +56,20 @@ fun main(no: Int,
     return string
 }
 
-class WebAppInterface(private val pajakJson: String, context: Context) {
-     val appContext : Context = context
+class WebAppInterface(context: Context) {
+    val appContext : Context = context
+    val db by lazy { PBBDB(appContext) }
     @JavascriptInterface
-    fun tampilkanString() :String{
-        return pajakJson
+    fun tampilkanString(blok: String) :String{
+        val pajaksConvert = mutableListOf<String>()
+
+
+        val pajaks = db.PBBDao().getPajaksnow(SimpleSQLiteQuery("SELECT * FROM blok${blok}"))
+        pajaks.forEachIndexed({index, element ->
+            pajaksConvert.add(main(element.no, element.NOP, element.blok, element.persil, element.namaWajibPajak, element.alamatWajibPajak, element.alamatObjekPajak, element.kelas, element.luasObjekPajak, element.pajakDitetapkan, element.sejarahObjekPajak, element.lat, element.lng))
+
+        })
+        return pajaksConvert.toString()
     }
     @JavascriptInterface
     fun tampilkanDataPajak(id:Int){
@@ -82,7 +92,6 @@ class MapActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        var hasilLoad:String = loadPajak()
 
 
         binding.webView.webViewClient = WebViewClient()
@@ -104,9 +113,7 @@ class MapActivity : AppCompatActivity() {
         binding.webView.settings.setSupportZoom(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
-        binding.webView.addJavascriptInterface(WebAppInterface(hasilLoad, this), "Android")
-        //binding.webView.loadUrl("file:///android_asset/javascriptMap/perblok.html")
-        //binding.webView.loadUrl("file:///android_asset/javascriptMap/skripsi.html")
+        binding.webView.addJavascriptInterface(WebAppInterface( this), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/javascriptMap/skripsi.html")
 
 
@@ -120,20 +127,6 @@ class MapActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-    }
-    fun loadPajak():String{
-        val pajaksConvert = mutableListOf<String>()
-
-        val pajaks = db.PBBDao().getPajaksnow()
-
-            /*pajaksConvert.*/
-        pajaks.forEachIndexed({index, element ->
-                pajaksConvert.add(main(element.no, element.NOP, element.blok, element.persil, element.namaWajibPajak, element.alamatWajibPajak, element.alamatObjekPajak, element.kelas, element.luasObjekPajak, element.pajakDitetapkan, element.sejarahObjekPajak, element.lat, element.lng))
-
-        })
-
-        Log.i("konfig web", pajaksConvert.toString())
-        return pajaksConvert.toString()
     }
 
 }

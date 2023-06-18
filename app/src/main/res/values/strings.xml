@@ -1,5 +1,21 @@
 <resources>
     <string name="app_name">PBBDraft</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="blok">
+        <item>blok6</item>
+        <item>blok8</item>
+        <item>blok9</item>
+        <item>blok10</item>
+        <item>blok11</item>
+        <item>blok12</item>
+        <item>blok13</item>
+        <item>blok14</item>
+        <item>blok15</item>
+        <item>blok16</item>
+        <item>blok17</item>
+        <item>blok18</item>
+        <item>blok19</item>
+        <item>blok25</item>
+        <item>blok26</item>
+        <item>blok27</item>
+    </string-array>
 </resources>
