@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<base target="_top">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>CRS.Simple example - Leaflet</title>
+
+
+	<link rel="stylesheet" href="leaflet\leaflet.css" />
+	<script src="leaflet\leaflet.js"></script>
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 400px;
+			width: 600px;
+			max-width: 100%;
+			max-height: 100%;
+		}
+	</style>
+	<style>body { padding: 0; margin: 0; } #map { height: 100%; width: 100vw; }</style>
+	
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+
+	const map = L.map('map', {
+		crs: L.CRS.Simple,
+		minZoom: -3
+	});
+	//var nilaiString = JSON.parse(Android.tampilkanString())
+
+	//console.log(nilaiString[0].NOP)
+	const bounds = [[0,0], [2000, 2000]];
+	const image = L.imageOverlay('/assets/javascriptMap/res/peta-blok-lengkap.jpg', bounds).addTo(map);
+
+	const sol = L.latLng([483.5, 490.5]);
+	const marker = L.marker(sol).addTo(map);
+
+
+	var blok = [6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+	var koordinatBlok = [[483.5, 490.5], [621, 707], [1035, 765], [1218, 1017], [1584, 1418], [1586, 1702], [1398, 1516], [1174, 1236], [1086, 1502], [930, 1124], [626, 1126], [322, 868], [310, 580]]
+	var params = new URLSearchParams();
+
+
+	for(let i = 0;i<blok.length;i++){
+		var markers = L.marker([koordinatBlok[i][0], koordinatBlok[i][1]]).bindPopup(`${blok[i]}`).bindTooltip(`${blok[i]}`,
+            {
+                permanent: true,
+                direction: 'center'
+            }).addTo(map);
+		markers.on('click', function(e){
+			var popup = e.target.getPopup()
+			var content = popup.getContent()
+
+			var url = "peta-perblok-fullscreen.html?"+"blok="+content;
+
+  			window.location.href = url;
+    		
+    } );
+	}
+
+	map.setView([968, 1064], -2);
+    //map.on("click", function(e){
+    //new L.Marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+    //console.log([e.latlng.lat, e.latlng.lng])
+    //})
+
+</script>
+
+
+
+</body>
+</html>

@@ -19,7 +19,7 @@ interface PBBDao {
 
     @RawQuery
     suspend fun getPajaks(query: SupportSQLiteQuery): List<PBB>
-    //Query("SELECT * FROM blok6")
+
     @Query("SELECT * FROM temp WHERE id=1")
     fun getProfile(): List<Profile>
 
@@ -29,12 +29,11 @@ interface PBBDao {
     @RawQuery
     suspend fun getPajak(query: SupportSQLiteQuery): List<PBB>
 
-/*    @Query("DELETE FROM blok6")
-    fun deletePajakAll()*/
+    @Query("DELETE FROM pajakPBB")
+    fun deletePajakAll()
 
-    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name='blok6'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name='pajakPBB'")
     fun resetPrimaryKey()
-
-    //@Query("SELECT * FROM 'blok6' WHERE nama LIKE :searchQuery OR NOP LIKE :searchQuery")
-    //suspend fun searchPajak(searchQuery: String): List<PBB>
+    @RawQuery
+    suspend fun searchPajak(query: SupportSQLiteQuery): List<PBB>
 }

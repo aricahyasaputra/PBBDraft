@@ -36,49 +36,49 @@ class EditActivity : AppCompatActivity() {
         //Menampilkan layout
         setContentView(view)
         //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-/*        //Menampilkan tombol update/save/export
+        //Menampilkan tombol update/save/export
         setupView()
         //Setup Onclick Listener tombol update/save
 
-        setupPDF()
-        //Inisialisasi pajak id dari activity sebelumnya*/
+        //setupPDF()
+        //Inisialisasi pajak id dari activity sebelumnya
         setupListener()
         //Setup Onclick Listener tombol export
         pajakId = intent.getIntExtra("intent_id", 0)
         //Log.i("Pajak id", pajakId.toString())
-        getPajak()
+
     }
 
 
-/*    fun setupView(){
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    fun setupView(){
         val intentType = intent.getIntExtra("intent_type", 0)
         when (intentType){
             Constant.TYPE_CREATE -> {
                 binding.buttonUpdate.visibility = View.GONE
-                binding.buttonExport.visibility = View.GONE
+                binding.buttonEksport.visibility = View.GONE
             }
-            Constant.TYPE_READ -> {
+            Constant.TYPE_EKSPORT -> {
                 binding.buttonSave.visibility = View.GONE
                 binding.buttonUpdate.visibility = View.GONE
                 getPajak()
             }
             Constant.TYPE_UPDATE-> {
                 binding.buttonSave.visibility = View.GONE
+                binding.buttonEksport.visibility = View.GONE
                 getPajak()
             }
         }
-    }*/
+    }
 
     fun setupListener(){
-/*        binding.buttonSave.setOnClickListener{
+        binding.buttonSave.setOnClickListener{
             CoroutineScope(Dispatchers.IO).launch{
                 db.PBBDao().addPajak(
-                    PBB(0, binding.editNOP.text.toString(), binding.editBlok.text.toString().toInt(), binding.editPersil.text.toString(), binding.editNama.text.toString(), binding.editAlamatWajibPajak.text.toString(), binding.editAlamatObjekPajak.text.toString(), binding.editKelas.text.toString(), binding.editLuas.text.toString().toInt(), binding.editPajakDitetapkan.text.toString().toInt(), binding.editSejarahTanah.text.toString(), binding.editLat.text.toString().toFloat(), binding.editLng.text.toString().toFloat())
+                    PBB(0, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat())
                 )
                 finish()
             }
-        }*/
+        }
         binding.buttonUpdate.setOnClickListener{
             CoroutineScope(Dispatchers.IO).launch{
                 //, blok=:${binding.editTextBlok.text}, persil=:${binding.editTextPersil.text}, namaWajibPajak=:${binding.editTextNamaWajibPajak.text}, alamatWajibPajak=:${binding.editTextAlamatWajibPajak.text}, alamatObjekPajak=:${binding.editTextAlamatObjekPajak.text}, kelas=:${binding.editTextKelas.text}, luasObjekPajak=:${binding.editTextLuas.text}, pajakDitetapkan=:${binding.editTextTotalWajibPajak.text}, sejarahObjekPajak=:${binding.editTextSejarahPajak.text}, lat=:${binding.editTextLat.text.toString().toFloat()}, lng=:${binding.editTextLng.text.toString().toFloat()}
@@ -89,6 +89,9 @@ class EditActivity : AppCompatActivity() {
                 )
                 finish()
             }
+        }
+        binding.buttonEksport.setOnClickListener {
+            setupPDF()
         }
     }
     fun getPajak(){
@@ -116,8 +119,9 @@ class EditActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-/*    fun setupPDF(){
-        binding.buttonExport.setOnClickListener{
+
+    fun setupPDF(){
+        binding.buttonEksport.setOnClickListener{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                 if(checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
                     val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -133,28 +137,28 @@ class EditActivity : AppCompatActivity() {
 
     private fun savePDF(){
         val mDoc = com.itextpdf.text.Document()
-        val mFileName = binding.editNama.text.toString();
+        val mFileName = binding.editTextNamaWajibPajak.text.toString();
 
         val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + mFileName + System.currentTimeMillis().toString()+ ".pdf"
 
         try {
             PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
-            mDoc.add(Paragraph("NOP :" + binding.editNOP.text.toString()))
-            mDoc.add(Paragraph("Blok : " + binding.editBlok.text.toString()))
-            mDoc.add(Paragraph("Persil : " + binding.editPersil.text.toString()))
-            mDoc.add(Paragraph("Nama Wajib Pajak : " + binding.editNama.text.toString()))
-            mDoc.add(Paragraph("Alamat Wajib Pajak : " + binding.editAlamatWajibPajak.text.toString()))
-            mDoc.add(Paragraph("Alamat Objek Pajak : " + binding.editAlamatObjekPajak.text.toString()))
-            mDoc.add(Paragraph("Kelas : " + binding.editKelas.text.toString()))
-            mDoc.add(Paragraph("Luas : " + binding.editLuas.text.toString()))
-            mDoc.add(Paragraph("Jumlah Pajak : " + binding.editPajakDitetapkan.text.toString()))
-            mDoc.add(Paragraph("Sejarah Objek Pajak : " + binding.editSejarahTanah.text.toString()))
+            mDoc.add(Paragraph("NOP :" + binding.editTextNOP.text.toString()))
+            mDoc.add(Paragraph("Blok : " + binding.editTextBlok.text.toString()))
+            mDoc.add(Paragraph("Persil : " + binding.editTextPersil.text.toString()))
+            mDoc.add(Paragraph("Nama Wajib Pajak : " + binding.editTextNamaWajibPajak.text.toString()))
+            mDoc.add(Paragraph("Alamat Wajib Pajak : " + binding.editTextAlamatWajibPajak.text.toString()))
+            mDoc.add(Paragraph("Alamat Objek Pajak : " + binding.editTextAlamatObjekPajak.text.toString()))
+            mDoc.add(Paragraph("Kelas : " + binding.editTextKelas.text.toString()))
+            mDoc.add(Paragraph("Luas : " + binding.editTextLuas.text.toString()))
+            mDoc.add(Paragraph("Jumlah Pajak : " + binding.editTextTotalWajibPajak.text.toString()))
+            mDoc.add(Paragraph("Sejarah Objek Pajak : " + binding.editTextSejarahPajak.text.toString()))
             mDoc.close()
             Toast.makeText(this, "$mFileName.pdf\n is create to \n$mFilePath", Toast.LENGTH_SHORT).show()
 
         }catch (e: Exception){
             Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show()
         }
-    }*/
+    }
 }

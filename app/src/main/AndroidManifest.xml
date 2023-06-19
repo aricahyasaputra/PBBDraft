@@ -14,22 +14,29 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PBBDraft"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.SplashScreenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.PetaPersilFullscreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PetaBlokFullscreenActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.ViewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.UploadDatabase"
             android:exported="false"
@@ -47,11 +54,8 @@
             android:requestLegacyExternalStorage="true"
             tools:ignore="ScopedStorage" />
         <activity
-            android:name=".mapdata.MapAdapter"
-            android:exported="false" />
-        <activity
             android:name=".ui.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

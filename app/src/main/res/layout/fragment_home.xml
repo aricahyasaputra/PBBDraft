@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.Home"
     android:padding="15dp"
-    android:background="@color/grey">
+    android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:padding="10dp"
         android:layout_gravity="left"
         android:src="@drawable/ic_search"
-        android:background="@drawable/bg_grey_white_rectangle" />
+        android:background="@drawable/bg_dark_green_rectangle_cornered" />
     <ImageView
         android:id="@+id/map_activity"
         android:layout_width="72dp"
@@ -36,7 +36,7 @@
         android:padding="10dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_map"
-        android:background="@drawable/bg_grey_white_rectangle"/>
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
     <ImageView
         android:id="@+id/upload_database_activity"
         android:layout_width="72dp"
@@ -45,7 +45,7 @@
         android:padding="10dp"
         android:src="@drawable/ic_archive"
         android:layout_gravity="right"
-        android:background="@drawable/bg_grey_white_rectangle"/>
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
 
     <TextView
         android:layout_width="wrap_content"

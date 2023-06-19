@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.DocumentsContract
 import android.provider.Settings
 import android.provider.SyncStateContract
@@ -41,7 +42,9 @@ class UploadDatabase : AppCompatActivity() {
     val db by lazy { PBBDB(this) }
     private lateinit var binding: ActivityUploadDatabaseBinding
     private val STORAGE_CODE = 1002
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+    private var progresBar = 0
+    var handler: Handler? = null
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         Log.i("test upload", "${uri}")
         if (uri != null) {
             importDatabase(uri)
@@ -58,20 +61,25 @@ class UploadDatabase : AppCompatActivity() {
 
         binding.uploadDatabase.setOnClickListener {
             //
+            progresBar = 0
 
             setupCSV()
-            val pajaks = db.PBBDao().getPajaksnow(SimpleSQLiteQuery("SELECT * FROM blok6"))
+            val pajaks = db.PBBDao().getPajaksnow(SimpleSQLiteQuery("SELECT * FROM pajakPBB"))
             val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "backup" + System.currentTimeMillis().toString() + ".xlsx"
 
             val xlWb = XSSFWorkbook()
             //Instantiate Excel worksheet:
             val xlWs = xlWb.createSheet()
 
+            binding.progressBarSecondary.min = 0
+            binding.progressBarSecondary.max = pajaks.size
 
             //Write text value to cell located at ROW_NUMBER / COLUMN_NUMBER:
 
             pajaks.forEachIndexed { index, element ->
                 val row = xlWs.createRow(index)
+                binding.progressBarSecondary.progress++
+                binding.textViewPrimary.setText("Eksporting data ${index} dari ${pajaks.size}")
                 row.createCell(0).setCellValue(element.no.toString())
                 row.createCell(1).setCellValue(element.NOP)
                 row.createCell(2).setCellValue(element.blok.toString())
@@ -91,6 +99,8 @@ class UploadDatabase : AppCompatActivity() {
             val outputStream = FileOutputStream(mFilePath)
             xlWb.write(outputStream)
             xlWb.close()
+
+            binding.textViewPrimary.setText("Eksport data Sukses")
             /*
 
 
@@ -100,6 +110,7 @@ class UploadDatabase : AppCompatActivity() {
             csvReader {  }*/
         }
         binding.importDatabase.setOnClickListener {
+            progresBar = 0
             resultLauncher.launch("*/*")
             //openFile()
         }
@@ -113,22 +124,27 @@ class UploadDatabase : AppCompatActivity() {
     }
 
     private fun importDatabase(uri: Uri){
-        //db.PBBDao().deletePajakAll()
-        //db.PBBDao().resetPrimaryKey()
+        db.PBBDao().deletePajakAll()
+        db.PBBDao().resetPrimaryKey()
 
         val inputStream = contentResolver.openInputStream(uri)
         val xlWb = WorkbookFactory.create(inputStream)
         val xlWs = xlWb.getSheetAt(0)
         val xlRows = xlWs.lastRowNum
         var i = 0
-        CoroutineScope(Dispatchers.IO).launch{
+        binding.progressBarSecondary.min = 0
+        binding.progressBarSecondary.max = xlRows
+
+        CoroutineScope(Dispatchers.Main).launch{
             while (i<= xlRows){
                 db.PBBDao().addPajak(
                     PBB(0, xlWs.getRow(i).getCell(1).toString(), xlWs.getRow(i).getCell(2).toString().toInt(), xlWs.getRow(i).getCell(3).toString(), xlWs.getRow(i).getCell(4).toString(), xlWs.getRow(i).getCell(5).toString(), xlWs.getRow(i).getCell(6).toString(), xlWs.getRow(i).getCell(7).toString(), xlWs.getRow(i).getCell(8).toString().toInt(), xlWs.getRow(i).getCell(9).toString().toInt(), xlWs.getRow(i).getCell(10).toString(), xlWs.getRow(i).getCell(11).toString().toFloat(), xlWs.getRow(i).getCell(12).toString().toFloat())
                 )
+                binding.textViewPrimary.setText("Importing data ${i} dari ${xlRows}")
+                binding.progressBarSecondary.progress = i
                 i++
             }
-            finish()
+            binding.textViewPrimary.setText("Import data Sukses")
         }
     }
 

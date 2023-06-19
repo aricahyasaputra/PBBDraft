@@ -2,18 +2,25 @@ package com.example.pbbdraft.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityViewBinding
 import com.example.pbbdraft.room.PBBDB
+import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.FileOutputStream
 
 class ViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewBinding
@@ -32,9 +39,19 @@ class ViewActivity : AppCompatActivity() {
             startActivity(
                 Intent(applicationContext, EditActivity::class.java)
                     .putExtra("intent_id", pajakId)
+                    .putExtra("intent_type", 2)
             )
             finish()
         }
+        binding.buttonExport.setOnClickListener {
+            startActivity(
+                Intent(applicationContext, EditActivity::class.java)
+                    .putExtra("intent_id", pajakId)
+                    .putExtra("intent_type", 0)
+            )
+            finish()
+        }
+
     }
 
     private fun getPajak(){
@@ -55,4 +72,7 @@ class ViewActivity : AppCompatActivity() {
 
         }
     }
+
+
+
 }

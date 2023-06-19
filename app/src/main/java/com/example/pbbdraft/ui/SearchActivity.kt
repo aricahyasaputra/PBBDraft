@@ -34,8 +34,6 @@ class SearchActivity : AppCompatActivity() {
         val adapterSpinnerBlok = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, PBBList)
         binding.blokSpinner.adapter = adapterSpinnerBlok
 
-
-
         binding.blokSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -61,6 +59,7 @@ class SearchActivity : AppCompatActivity() {
         setupListener()
         //Inisialisasi Recyclerview
         setupRecyclerView()
+        setupSearchPajak()
     }
     override fun onStart(){
         super.onStart()
@@ -93,17 +92,16 @@ class SearchActivity : AppCompatActivity() {
         )
     }
 
-    private fun intentView(pajakId: Int, intentType: Int, pajakBlok:String){
+    private fun intentView(pajakId: Int){
         startActivity(
             Intent(applicationContext, ViewActivity::class.java)
                 .putExtra("intent_id", pajakId)
-                .putExtra("intent_type", intentType)
         )
     }
     private fun setupRecyclerView(){
         PBBAdapter = PBBAdapter(arrayListOf(), object : PBBAdapter.OnAdapterListener{
             override fun onClik(pajak: PBB) {
-                intentView(pajak.no, Constant.TYPE_READ, binding.blokSpinner.selectedItem.toString())
+                intentView(pajak.no)
             }
 
             override fun onUpdate(pajak: PBB) {
@@ -142,4 +140,18 @@ class SearchActivity : AppCompatActivity() {
         }
         alertDialog.show()
     }
+
+    private fun setupSearchPajak(){
+        binding.buttonSearch.setOnClickListener {
+            val pajakDicari:String = binding.editTextPajakDicari.text.toString()
+            CoroutineScope(Dispatchers.IO).launch{
+                val pajaks = db.PBBDao().searchPajak(SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE namaWajibPajak like '%${pajakDicari}%'"))
+                Log.d("MainActivity", "dbResponse: $pajaks")
+                withContext(Dispatchers.Main){
+                    PBBAdapter.setData( pajaks )
+                }
+            }
+        }
+    }
+
 }

@@ -4,19 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    android:background="@drawable/bg_light_green_rectangle"
+    android:background="@color/white"
     tools:context=".ui.Archive">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Peta Blok"
+        android:textSize="24sp"
+        android:textColor="@color/black"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_petabloklengkap"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:layout_marginTop="50dp">
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/photo_view_petabloklengkap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_person"
-                android:background="@drawable/bg_dark_green_rectangle_cornered"/>
+                android:background="@drawable/bg_light_green_rectangle_cornered"/>
                 <ImageView
                     android:id="@+id/fullscreen_petabloklengkap"
                     android:layout_width="50dp"
@@ -25,11 +32,31 @@
                     android:layout_gravity="bottom|right"/>
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/tombol_fullscreen"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FUllscreen"
-        android:layout_gravity="bottom"/>
+        android:text="Peta Persil"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="300dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_petapersillengkap"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="350dp">
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/photo_view_petapersillengkap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_person"
+            android:background="@drawable/bg_light_green_rectangle_cornered"/>
+        <ImageView
+            android:id="@+id/fullscreen_petapersillengkap"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_fullscreen_in"
+            android:layout_gravity="bottom|right"/>
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>

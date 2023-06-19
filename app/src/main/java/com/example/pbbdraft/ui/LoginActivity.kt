@@ -1,6 +1,7 @@
 package com.example.pbbdraft.ui
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.InputStream
 
 
 const val RC_SIGN_IN = 123
@@ -32,35 +34,32 @@ class LoginActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val ims: InputStream = this.assets.open("javascriptMap/res/logo-pajak-tanah-sawah.png")
+        val drawwable: Drawable? = Drawable.createFromStream(ims, null)
+
+        binding.imgPajak.setImageDrawable(drawwable)
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         // Build a GoogleSignInClient with the options specified by gso.
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         binding.buttonLogin.setOnClickListener{
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
-        binding.buttonLogout.setOnClickListener{
-            mGoogleSignInClient.signOut().addOnCompleteListener{
-                    binding.textHasil.text = "Berhasil Logout"
-                CoroutineScope(Dispatchers.IO).launch {
-                    db.PBBDao().updateProfile(
-                        Profile(1, "Guest", "Guest", "Guest")
-                    )
-                }
-            }
-        }
+
+        /*
         binding.buttonCheck.setOnClickListener {
             startActivity(
                 Intent(applicationContext, MainActivity::class.java)
             )
-        /*
+        *//*
             val profile = db.PBBDao().getProfile()
             Log.i("Isi Profile", profile.toString())
             val account = GoogleSignIn.getLastSignedInAccount(this)
             if (account != null) {
                 Toast.makeText(this, account.displayName, Toast.LENGTH_LONG).show()
-            }*/
-        }
+            }*//*
+        }*/
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -79,7 +78,6 @@ class LoginActivity : AppCompatActivity() {
             val account = completedTask.getResult(ApiException::class.java)
 
             // Signed in successfully, show authenticated UI.
-            binding.textHasil.text = account.displayName
             CoroutineScope(Dispatchers.IO).launch {
                 db.PBBDao().updateProfile(
                     Profile(1, account.displayName?:"Guest", account.email?:"Guest", account.photoUrl.toString())
@@ -92,7 +90,6 @@ class LoginActivity : AppCompatActivity() {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("Gagal", "signInResult:failed code=" + e.getStatusCode())
-            binding.textHasil.text = "gagal"
         }
     }
 }

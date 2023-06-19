@@ -1,5 +1,6 @@
 package com.example.pbbdraft.ui
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,12 +21,31 @@ class Archive : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentArchiveBinding.inflate(inflater, container, false)
 
+        setupPetaBlok()
+        setupPetaPersil()
+
+
+        return binding.root
+    }
+    private fun setupPetaBlok(){
         val ims:InputStream = requireContext().assets.open("javascriptMap/res/peta-blok-lengkap.jpg")
         val drawwable: Drawable? = Drawable.createFromStream(ims, null)
 
         binding.photoViewPetabloklengkap.setImageDrawable(drawwable)
+        binding.fullscreenPetabloklengkap.setOnClickListener {
+            val intent = Intent(context, PetaBlokFullscreenActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
+    private fun setupPetaPersil(){
+        val ims:InputStream = requireContext().assets.open("javascriptMap/res/peta-persil-lengkap.jpg")
+        val drawwable: Drawable? = Drawable.createFromStream(ims, null)
 
-        return binding.root
+        binding.photoViewPetapersillengkap.setImageDrawable(drawwable)
+        binding.fullscreenPetapersillengkap.setOnClickListener {
+            val intent = Intent(context, PetaPersilFullscreenActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

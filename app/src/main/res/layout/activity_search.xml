@@ -4,41 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SearchActivity">
+    tools:context=".ui.SearchActivity"
+    android:background="@drawable/bg_light_green_rectangle">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edit_text_pajak_dicari"
         android:layout_width="200dp"
-        android:layout_height="52dp"
+        android:layout_height="50dp"
         android:hint="Nama"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toTopOf="@+id/list_pajak"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
 
     <ImageView
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-
+        android:id="@+id/button_search"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_dark_green_rectangle_cornered"
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toTopOf="@+id/list_pajak"
-        app:layout_constraintEnd_toStartOf="@+id/blok_spinner"
-        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/blok_spinner"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/blok_spinner"
-        android:layout_width="121dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:entries="@array/blok"
+
         app:layout_constraintBottom_toTopOf="@+id/list_pajak"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/edit_text_pajak_dicari"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_search"
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_pajak"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="90dp"
         android:background="@drawable/bg_light_green_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
