@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold"
-        android:background="@drawable/bg_grey_white_rectangle"
+        android:background="@drawable/bg_light_green_rectangle_cornered"
         android:paddingHorizontal="20dp"/>
 
     <ImageView
@@ -45,6 +45,26 @@
         android:padding="10dp"
         android:src="@drawable/ic_archive"
         android:layout_gravity="right"
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
+
+    <ImageView
+        android:id="@+id/export_pdf_activity"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="175dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_pdf_24"
+        android:layout_gravity="left"
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
+
+    <ImageView
+        android:id="@+id/qr_activity"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="175dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_qr"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_dark_green_rectangle_cornered"/>
 
     <TextView

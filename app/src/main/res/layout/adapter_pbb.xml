@@ -6,7 +6,7 @@
     android:layout_height="50dp"
     android:layout_margin="10dp"
     android:padding="5dp"
-    android:background="@drawable/bg_dark_green_rectangle">
+    android:background="@drawable/bg_light_green_rectangle_cornered">
 
 
     <TextView

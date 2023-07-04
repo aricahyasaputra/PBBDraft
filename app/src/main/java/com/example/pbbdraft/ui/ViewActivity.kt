@@ -30,6 +30,7 @@ class ViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityViewBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)

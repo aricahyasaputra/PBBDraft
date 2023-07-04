@@ -13,16 +13,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <EditText
-            android:id="@+id/edit_text_NOP"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_NOP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="NOP"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="20dp" />
+            tools:layout_editor_absoluteX="20dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_NOP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/text_objek_pajak"
@@ -33,53 +37,66 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_NOP" />
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_NOP" />
 
-        <EditText
-            android:id="@+id/edit_text_persil"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_persil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Persil"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/text_objek_pajak" />
+            app:layout_constraintTop_toBottomOf="@id/text_objek_pajak">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_persil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_alamat_objek_pajak"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_alamat_objek_pajak"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Alamat"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_persil" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_persil">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_alamat_objek_pajak"
+                android:layout_width="match_parent"
+                android:layout_height="96dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_lat"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_lat"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
-            android:hint="PBB"
+            android:hint="Lat"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_alamat_objek_pajak" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_alamat_objek_pajak">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_lat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_lng"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_lng"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
-            android:hint="PBB"
+            android:hint="Lng"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_alamat_objek_pajak" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_alamat_objek_pajak">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_lng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/text_nama_dan_alamat"
@@ -90,129 +107,148 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_lat" />
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_lat" />
 
-        <EditText
-            android:id="@+id/edit_text_nama_wajib_pajak"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_nama_wajib_pajak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Nama "
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/text_nama_dan_alamat" />
-        <EditText
-            android:id="@+id/edit_text_alamat_wajib_pajak"
+            app:layout_constraintTop_toBottomOf="@id/text_nama_dan_alamat">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_nama_wajib_pajak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_alamat_wajib_pajak"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Alamat "
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_nama_wajib_pajak" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_nama_wajib_pajak">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_alamat_wajib_pajak"
+                android:layout_width="match_parent"
+                android:layout_height="96dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_jenis_pbb"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_jenis_pbb"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="PBB"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_alamat_wajib_pajak" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_alamat_wajib_pajak" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_jenis_pbb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_luas"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_luas"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Luas"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/edit_text_kelas"
+            app:layout_constraintEnd_toStartOf="@+id/text_input_layout_kelas"
             app:layout_constraintHorizontal_bias="0.522"
-            app:layout_constraintStart_toEndOf="@+id/edit_text_jenis_pbb"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_alamat_wajib_pajak" />
+            app:layout_constraintStart_toEndOf="@+id/text_input_layout_jenis_pbb"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_alamat_wajib_pajak" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_luas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_kelas"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_kelas"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Kelas"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_alamat_wajib_pajak" />
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_alamat_wajib_pajak" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_kelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_total_wajib_pajak"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_total_wajib_pajak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Total Pajak"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_kelas" />
-        <EditText
-            android:id="@+id/edit_text_blok"
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_kelas" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_total_wajib_pajak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_edit_text_blok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Blok"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_total_wajib_pajak" />
-        <EditText
-            android:id="@+id/edit_text_sejarah_pajak"
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_total_wajib_pajak" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_blok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_sejarah_pajak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_light_green_rectangle_cornered"
             android:hint="Sejarah Tanah"
             android:paddingVertical="6dp"
-            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_blok" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_edit_text_blok" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_sejarah_pajak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_dark_green_rectangle_cornered"
             android:text="Perbarui Informasi Tanah"
-            android:textSize="11dp"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_sejarah_pajak"/>
-        <Button
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_sejarah_pajak"/>
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_dark_green_rectangle_cornered"
             android:text="Tambah Informasi Tanah"
-            android:textSize="11dp"
             app:layout_constraintTop_toBottomOf="@id/button_update"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_eksport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_dark_green_rectangle_cornered"
             android:text="Eksport Data Menjadi PDF"
-            android:textSize="11dp"
             app:layout_constraintTop_toBottomOf="@id/button_save"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

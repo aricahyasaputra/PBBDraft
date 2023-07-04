@@ -390,48 +390,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_batal_bayar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="72dp"
-            android:textSize="11dp"
-            android:backgroundTint="@color/dark_green"
             android:text="Batal Bayar" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="72dp"
-            android:textSize="11dp"
-            android:backgroundTint="@color/dark_green"
             android:text="Perbarui Info" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_export"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/dark_green"
-            android:text="Ekspor data menjadi pdf"
-            android:textSize="11dp"/>
+            android:text="Ekspor data menjadi pdf" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_sejarah_tanah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="18dp"
-            android:backgroundTint="@color/dark_green"
-            android:text="Sejarah Tanah Sawah"
-            android:textSize="11dp"/>
+            android:text="Sejarah Tanah Sawah" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

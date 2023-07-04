@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,12 +29,20 @@ class SearchActivity : AppCompatActivity() {
     val db by lazy { PBBDB(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivitySearchBinding.inflate(layoutInflater)
         val view = binding.root
-
+        val intentType = intent.getIntExtra("intent_type", 0)
         val PBBList = listOf("blok6", "blok8", "blok9", "blok10", "blok11", "blok12", "blok13", "blok14", "blok15", "blok16", "blok17", "blok18", "blok19", "blok25", "blok26", "blok27")
-        val adapterSpinnerBlok = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, PBBList)
+        val adapterSpinnerBlok = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, PBBList)
         binding.blokSpinner.adapter = adapterSpinnerBlok
+
+        if(intentType == Constant.TYPE_EKSPORT){
+            binding.buttonCreate.visibility = View.GONE
+            binding.filterSpinner.visibility = View.GONE
+            binding.buttonSearch.visibility = View.GONE
+            binding.editTextPajakDicari.visibility = View.GONE
+        }
 
         binding.blokSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -99,9 +109,19 @@ class SearchActivity : AppCompatActivity() {
         )
     }
     private fun setupRecyclerView(){
+        val intentType = intent.getIntExtra("intent_type", 0)
         PBBAdapter = PBBAdapter(arrayListOf(), object : PBBAdapter.OnAdapterListener{
+
             override fun onClik(pajak: PBB) {
-                intentView(pajak.no)
+                when(intentType){
+                    Constant.TYPE_UPDATE -> {
+                        intentView(pajak.no)
+                    }
+                    Constant.TYPE_EKSPORT -> {
+                        intentEdit(pajak.no, Constant.TYPE_EKSPORT)
+                    }
+                }
+
             }
 
             override fun onUpdate(pajak: PBB) {
@@ -112,7 +132,7 @@ class SearchActivity : AppCompatActivity() {
                 deleteDialog(pajak)
             }
 
-        })
+        }, intentType)
         binding.listPajak.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = PBBAdapter

@@ -31,6 +31,7 @@ class EditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityEditBinding.inflate(layoutInflater)
         val view = binding.root
         //Menampilkan layout
@@ -72,7 +73,7 @@ class EditActivity : AppCompatActivity() {
 
     fun setupListener(){
         binding.buttonSave.setOnClickListener{
-            CoroutineScope(Dispatchers.IO).launch{
+            CoroutineScope(Dispatchers.Main).launch{
                 db.PBBDao().addPajak(
                     PBB(0, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat())
                 )
@@ -80,7 +81,7 @@ class EditActivity : AppCompatActivity() {
             }
         }
         binding.buttonUpdate.setOnClickListener{
-            CoroutineScope(Dispatchers.IO).launch{
+            CoroutineScope(Dispatchers.Main).launch{
                 //, blok=:${binding.editTextBlok.text}, persil=:${binding.editTextPersil.text}, namaWajibPajak=:${binding.editTextNamaWajibPajak.text}, alamatWajibPajak=:${binding.editTextAlamatWajibPajak.text}, alamatObjekPajak=:${binding.editTextAlamatObjekPajak.text}, kelas=:${binding.editTextKelas.text}, luasObjekPajak=:${binding.editTextLuas.text}, pajakDitetapkan=:${binding.editTextTotalWajibPajak.text}, sejarahObjekPajak=:${binding.editTextSejarahPajak.text}, lat=:${binding.editTextLat.text.toString().toFloat()}, lng=:${binding.editTextLng.text.toString().toFloat()}
                 db.PBBDao().updatePajak(PBB(pajakId, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat()))
                 startActivity(
@@ -96,7 +97,7 @@ class EditActivity : AppCompatActivity() {
     }
     fun getPajak(){
         pajakId = intent.getIntExtra("intent_id", 0)
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.Main).launch{
             val pajaks = db.PBBDao().getPajak( SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE no=${pajakId}") )[0]
             binding.editTextNOP.setText(pajaks.NOP)
             binding.editTextBlok.setText( pajaks.blok.toString() )

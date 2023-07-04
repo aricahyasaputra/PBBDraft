@@ -50,8 +50,6 @@ class MapActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
-
         binding.webView.webViewClient = WebViewClient()
 
 

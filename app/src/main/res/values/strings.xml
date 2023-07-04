@@ -18,4 +18,8 @@
         <item>blok26</item>
         <item>blok27</item>
     </string-array>
+    <string-array name="filter_type">
+        <item>Nama</item>
+        <item>NOP</item>
+    </string-array>
 </resources>

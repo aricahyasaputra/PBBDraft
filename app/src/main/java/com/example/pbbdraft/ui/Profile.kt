@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import coil.load
 import com.example.pbbdraft.databinding.FragmentProfileBinding
 import com.example.pbbdraft.room.PBBDB
@@ -45,6 +46,10 @@ class Profile : Fragment() {
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
             }
+        }
+
+        binding.buttonBackup.setOnClickListener {
+            Toast.makeText(context, "Backup gagal, terjadi masalah pada API Google", Toast.LENGTH_LONG).show()
         }
 
         return binding.root
