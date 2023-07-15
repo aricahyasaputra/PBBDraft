@@ -13,7 +13,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
+import com.google.api.services.drive.DriveScopes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +41,8 @@ class LoginActivity : AppCompatActivity() {
 
         binding.imgPajak.setImageDrawable(drawwable)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) .requestScopes(
+            Scope(DriveScopes.DRIVE_FILE), Scope(DriveScopes.DRIVE)).requestEmail().build()
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         binding.buttonLogin.setOnClickListener{
@@ -47,6 +50,16 @@ class LoginActivity : AppCompatActivity() {
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
+        binding.buttonGuest.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                db.PBBDao().updateProfile(
+                    Profile(1,"Guest","Guest", "Guest")
+                )
+            }
+            startActivity(
+                Intent(applicationContext, MainActivity::class.java)
+            )
+        }
         /*
         binding.buttonCheck.setOnClickListener {
             startActivity(
@@ -92,4 +105,5 @@ class LoginActivity : AppCompatActivity() {
             Log.w("Gagal", "signInResult:failed code=" + e.getStatusCode())
         }
     }
+
 }

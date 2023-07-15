@@ -21,6 +21,13 @@ import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityUploadDatabaseBinding
 import com.example.pbbdraft.room.PBB
 import com.example.pbbdraft.room.PBBDB
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.http.FileContent
+import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.services.drive.Drive
+import com.google.api.services.drive.DriveScopes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -93,6 +100,7 @@ class UploadDatabase : AppCompatActivity() {
                 row.createCell(10).setCellValue(element.sejarahObjekPajak)
                 row.createCell(11).setCellValue(element.lat.toString())
                 row.createCell(12).setCellValue(element.lng.toString())
+                row.createCell(13).setCellValue(element.statusPembayaranPajak.toString())
             }
 
             //Write file:
@@ -108,6 +116,44 @@ class UploadDatabase : AppCompatActivity() {
             csvPrinter.flush()
             csvPrinter.close()
             csvReader {  }*/
+            CoroutineScope(Dispatchers.IO).launch {
+                GoogleSignIn.getLastSignedInAccount(this@UploadDatabase)?.let { googleAccount ->
+
+                    // get credentials
+                    val credential = GoogleAccountCredential.usingOAuth2(
+                        this@UploadDatabase, listOf(DriveScopes.DRIVE, DriveScopes.DRIVE_FILE)
+                    )
+                    credential.selectedAccount = googleAccount.account!!
+
+                    // get Drive Instance
+                    val drive = Drive
+                        .Builder(
+                            AndroidHttp.newCompatibleTransport(),
+                            JacksonFactory.getDefaultInstance(),
+                            credential
+                        )
+                        .setApplicationName("PBB Draft")
+                        .build()
+
+                    val gFolder = com.google.api.services.drive.model.File()
+                    // Set file name and MIME
+                    gFolder.name = "My Cool Folder Name"
+                    gFolder.mimeType = "application/vnd.google-apps.folder"
+
+                    // You can also specify where to create the new Google folder
+                    // passing a parent Folder Id
+                    val parents: MutableList<String> = ArrayList(1)
+                    parents.add("My Cool Folder Name")
+                    gFolder.parents = parents
+                    //drive.Files().create(gFolder).setFields("id").execute()
+
+                    val gfile = com.google.api.services.drive.model.File()
+                    val fileContent = FileContent("application/vnd.ms-excel", File(mFilePath))
+                    gfile.name = "backup" + System.currentTimeMillis().toString() + ".xlsx"
+                    drive.Files().create(gfile, fileContent).setFields("id").execute()
+
+                }
+            }
         }
         binding.importDatabase.setOnClickListener {
             progresBar = 0
@@ -138,7 +184,7 @@ class UploadDatabase : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch{
             while (i<= xlRows){
                 db.PBBDao().addPajak(
-                    PBB(0, xlWs.getRow(i).getCell(1).toString(), xlWs.getRow(i).getCell(2).toString().toInt(), xlWs.getRow(i).getCell(3).toString(), xlWs.getRow(i).getCell(4).toString(), xlWs.getRow(i).getCell(5).toString(), xlWs.getRow(i).getCell(6).toString(), xlWs.getRow(i).getCell(7).toString(), xlWs.getRow(i).getCell(8).toString().toInt(), xlWs.getRow(i).getCell(9).toString().toInt(), xlWs.getRow(i).getCell(10).toString(), xlWs.getRow(i).getCell(11).toString().toFloat(), xlWs.getRow(i).getCell(12).toString().toFloat())
+                    PBB(0, xlWs.getRow(i).getCell(1).toString(), xlWs.getRow(i).getCell(2).toString().toInt(), xlWs.getRow(i).getCell(3).toString(), xlWs.getRow(i).getCell(4).toString(), xlWs.getRow(i).getCell(5).toString(), xlWs.getRow(i).getCell(6).toString(), xlWs.getRow(i).getCell(7).toString(), xlWs.getRow(i).getCell(8).toString().toInt(), xlWs.getRow(i).getCell(9).toString().toInt(), xlWs.getRow(i).getCell(10).toString(), xlWs.getRow(i).getCell(11).toString().toFloat(), xlWs.getRow(i).getCell(12).toString().toFloat(), xlWs.getRow(i).getCell(13).toString().toInt())
                 )
                 binding.textViewPrimary.setText("Importing data ${i} dari ${xlRows}")
                 binding.progressBarSecondary.progress = i

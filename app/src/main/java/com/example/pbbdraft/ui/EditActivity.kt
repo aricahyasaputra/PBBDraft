@@ -75,7 +75,7 @@ class EditActivity : AppCompatActivity() {
         binding.buttonSave.setOnClickListener{
             CoroutineScope(Dispatchers.Main).launch{
                 db.PBBDao().addPajak(
-                    PBB(0, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat())
+                    PBB(0, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat(), 0)
                 )
                 finish()
             }
@@ -83,7 +83,7 @@ class EditActivity : AppCompatActivity() {
         binding.buttonUpdate.setOnClickListener{
             CoroutineScope(Dispatchers.Main).launch{
                 //, blok=:${binding.editTextBlok.text}, persil=:${binding.editTextPersil.text}, namaWajibPajak=:${binding.editTextNamaWajibPajak.text}, alamatWajibPajak=:${binding.editTextAlamatWajibPajak.text}, alamatObjekPajak=:${binding.editTextAlamatObjekPajak.text}, kelas=:${binding.editTextKelas.text}, luasObjekPajak=:${binding.editTextLuas.text}, pajakDitetapkan=:${binding.editTextTotalWajibPajak.text}, sejarahObjekPajak=:${binding.editTextSejarahPajak.text}, lat=:${binding.editTextLat.text.toString().toFloat()}, lng=:${binding.editTextLng.text.toString().toFloat()}
-                db.PBBDao().updatePajak(PBB(pajakId, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat()))
+                db.PBBDao().updatePajak(PBB(pajakId, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat(), 0))
                 startActivity(
                     Intent(applicationContext, ViewActivity::class.java)
                         .putExtra("intent_id", pajakId)

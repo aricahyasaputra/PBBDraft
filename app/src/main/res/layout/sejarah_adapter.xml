@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_margin="10dp"
+    android:padding="5dp"
+    android:background="@drawable/bg_light_green_rectangle_cornered">
+
+    <TextView
+        android:id="@+id/nomor_urut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/nama_pemilik"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nomor_urut"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nama Pemilik" />
+
+    <TextView
+        android:id="@+id/NOC"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.722"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024"
+        tools:text="No C" />
+
+    <TextView
+        android:id="@+id/nomor_seri"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.88"
+        tools:text="No Seri" />
+
+    <ImageView
+        android:id="@+id/icon_edit"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/icon_delete"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toEndOf="@+id/nama_pemilik"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon_delete"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

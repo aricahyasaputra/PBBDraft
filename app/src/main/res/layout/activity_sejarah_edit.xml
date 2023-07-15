@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SejarahEditActivity"
+    android:background="@color/white"
+    android:padding="10dp">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_nomor_urut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nomor Urut"
+        android:paddingVertical="6dp"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_nomor_urut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_nomor_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nomor C"
+        android:paddingVertical="6dp"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_nomor_urut">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_nomor_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_nomor_seri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nomor Seri"
+        android:paddingVertical="6dp"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_nomor_c">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_nomor_seri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_nama_objek_pajak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama"
+        android:paddingVertical="6dp"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_nomor_seri">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_nama_objek_pajak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_desa_objek_pajak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Desa"
+        android:paddingVertical="6dp"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_nama_objek_pajak">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_desa_objek_pajak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Perbarui Informasi Tanah"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_desa_objek_pajak"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Tambah Informasi Tanah"
+        app:layout_constraintTop_toBottomOf="@id/button_update"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

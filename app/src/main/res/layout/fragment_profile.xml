@@ -91,6 +91,16 @@
         android:text="Logout Akun"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_login"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="80dp"
+        android:text="Login Akun" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_backup"
         android:layout_gravity="center"
         android:layout_width="match_parent"

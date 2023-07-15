@@ -84,4 +84,32 @@ dependencies {
 
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
+    // Guava
+    implementation "com.google.guava:guava:24.1-jre"
+    // Guava fix
+    implementation "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
+
+    //Drive
+    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+        exclude module: 'guava-jdk5'
+    }
+    implementation('com.google.apis:google-api-services-drive:v3-rev136-1.25.0') {
+        exclude group: 'org.apache.httpcomponents'
+        exclude module: 'guava-jdk5'
+    }
+
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+
+    def camerax_version = "1.2.2"
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-video:${camerax_version}"
+
+    implementation "androidx.camera:camera-view:${camerax_version}"
+    implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    // To recognize Latin script
+    implementation 'com.google.mlkit:text-recognition:16.0.0'
 }

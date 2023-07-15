@@ -67,6 +67,16 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_dark_green_rectangle_cornered"/>
 
+    <ImageView
+        android:id="@+id/sejarah_activity"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="175dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_person"
+        android:layout_gravity="right"
+        android:background="@drawable/bg_dark_green_rectangle_cornered"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,18 +86,20 @@
         android:textSize="20sp"
         android:textStyle="bold" />
     <TextView
+        android:id="@+id/total_pajak_tertanggung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="Rp.36.089.145"
+        android:text="Rp.-"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="30dp"/>
     <TextView
+        android:id="@+id/text_view_petak_tertanggung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|right"
-        android:text="1145 Petak"
+        android:text="- Petak"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="30dp"/>
@@ -102,18 +114,20 @@
         android:textStyle="bold"
         android:layout_marginTop="60dp"/>
     <TextView
+        android:id="@+id/text_view_total_pajak_terbayar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="Rp.26.789.130"
+        android:text="Rp.-"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="90dp"/>
     <TextView
+        android:id="@+id/text_view_total_petak_terbayar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|right"
-        android:text="867 Petak"
+        android:text="- Petak"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="90dp"/>
@@ -128,18 +142,20 @@
         android:textStyle="bold"
         android:layout_marginTop="120dp"/>
     <TextView
+        android:id="@+id/text_view_total_pajak_belum_terbayar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="Rp.9.300.015"
+        android:text="Rp.-"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="150dp"/>
     <TextView
+        android:id="@+id/text_view_total_petak_belum_terbayar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|right"
-        android:text="278 Petak"
+        android:text="- Petak"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="150dp"/>

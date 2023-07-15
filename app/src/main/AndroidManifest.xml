@@ -4,6 +4,9 @@
     package="com.example.pbbdraft">
 
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,10 +21,23 @@
         android:theme="@style/Theme.PBBDraft"
         tools:targetApi="31">
         <activity
+            android:name=".ui.ProcessImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SejarahEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SejarahTanahActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,7 +52,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.UploadDatabase"
             android:exported="false"
@@ -48,7 +64,7 @@
         <activity
             android:name=".ui.SearchActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".ui.EditActivity"
             android:exported="false"
@@ -56,7 +72,9 @@
             tools:ignore="ScopedStorage" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:requestLegacyExternalStorage="true"
+            tools:ignore="ScopedStorage" />
     </application>
 
 </manifest>

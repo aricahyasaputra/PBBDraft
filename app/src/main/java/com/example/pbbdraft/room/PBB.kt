@@ -18,5 +18,6 @@ data class PBB (
     val pajakDitetapkan: Int,
     val sejarahObjekPajak: String,
     val lat: Float,
-    val lng: Float
+    val lng: Float,
+    val statusPembayaranPajak: Int
 )

@@ -53,6 +53,21 @@ class ViewActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.buttonBatalBayar.setOnClickListener {
+            pajakId = intent.getIntExtra("intent_id", 0)
+            CoroutineScope(Dispatchers.Main).launch {
+                val pajaks = db.PBBDao().getPajak( SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE no=${pajakId}") )[0]
+                if (pajaks.statusPembayaranPajak == 0){
+                    db.PBBDao().updateStatusPembayaran(pajakId, 1)
+                    binding.textViewStatusPembayaran.text = "Sudah Bayar"
+                    binding.buttonBatalBayar.text = "Batal Bayar"
+                }else{
+                    db.PBBDao().updateStatusPembayaran(pajakId, 0)
+                    binding.textViewStatusPembayaran.text = "Belum Bayar"
+                    binding.buttonBatalBayar.text = "Sudah Bayar"
+                }
+            }
+        }
     }
 
     private fun getPajak(){
@@ -70,7 +85,11 @@ class ViewActivity : AppCompatActivity() {
             binding.luasObjekPajak.text = pajaks.luasObjekPajak.toString()
             binding.pajakDitetapkan.text = pajaks.pajakDitetapkan.toString()
             binding.sejarahTanah.text = pajaks.sejarahObjekPajak
-
+            if (pajaks.statusPembayaranPajak == 1){
+                binding.textViewStatusPembayaran.text = "Sudah Bayar"
+            }else{
+                binding.buttonBatalBayar.text = "Sudah Bayar"
+            }
         }
     }
 

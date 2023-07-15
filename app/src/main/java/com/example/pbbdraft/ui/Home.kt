@@ -7,11 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.pbbdraft.databinding.ActivityMainBinding
 import com.example.pbbdraft.databinding.FragmentHomeBinding
+import com.example.pbbdraft.room.PBBDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.Locale
 
 
 class Home : Fragment() {
+    val db by lazy { PBBDB(requireContext()) }
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -21,6 +27,7 @@ class Home : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        setupDashboard()
 
         binding.searchActivity.setOnClickListener{
             val intent = Intent(context, SearchActivity::class.java)
@@ -44,10 +51,42 @@ class Home : Fragment() {
         }
 
         binding.qrActivity.setOnClickListener {
-            Toast.makeText(context, "QR Gagal Eror Camera API", Toast.LENGTH_LONG).show()
+            val intent = Intent(context, CameraActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.sejarahActivity.setOnClickListener {
+            val intent = Intent(context, SejarahTanahActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root
     }
 
+    private fun setupDashboard(){
+        val localeID = Locale("in", "ID")
+        val nf: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val totalPajakTertanggung = db.PBBDao().updateDashboardPajakTertanggung()?:0
+
+            binding.totalPajakTertanggung.text = nf.format(totalPajakTertanggung)
+            val totalPajakTerbayar = db.PBBDao().updateDashboardPajakTerbayar(1)?:0
+            binding.textViewTotalPajakTerbayar.text = nf.format(totalPajakTerbayar)
+            val totalPajakBelumTerbayar = db.PBBDao().updateDashboardPajakTerbayar(0)?:0
+            binding.textViewTotalPajakBelumTerbayar.text = nf.format(totalPajakBelumTerbayar)
+            val totalPetakTertanggung = db.PBBDao().updateDashboardPetakTertanggung()?:0
+            binding.textViewPetakTertanggung.text = "${totalPetakTertanggung} Petak"
+            val totalPetakTerbayar = db.PBBDao().updateDashboardPetakTerbayar(1)?:0
+            binding.textViewTotalPetakTerbayar.text = "${totalPetakTerbayar} Petak"
+            val totalPetakBelumTerbayar = db.PBBDao().updateDashboardPetakTerbayar(0)?:0
+            binding.textViewTotalPetakBelumTerbayar.text = "${totalPetakBelumTerbayar} Petak"
+            //Toast.makeText(requireContext(), "Dashboard Updated", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupDashboard()
+    }
 }

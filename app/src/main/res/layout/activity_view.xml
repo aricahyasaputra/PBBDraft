@@ -33,10 +33,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/text_view_status_pembayaran"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:text="Sudah Bayar"
+        android:text="Belum Bayar"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

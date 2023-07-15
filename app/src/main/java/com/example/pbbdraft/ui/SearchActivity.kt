@@ -33,6 +33,11 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         val view = binding.root
         val intentType = intent.getIntExtra("intent_type", 0)
+        val NOP : String? = intent.getStringExtra("NOP")
+
+        if(NOP != null){
+            binding.editTextPajakDicari.setText(NOP)
+        }
         val PBBList = listOf("blok6", "blok8", "blok9", "blok10", "blok11", "blok12", "blok13", "blok14", "blok15", "blok16", "blok17", "blok18", "blok19", "blok25", "blok26", "blok27")
         val adapterSpinnerBlok = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, PBBList)
         binding.blokSpinner.adapter = adapterSpinnerBlok
