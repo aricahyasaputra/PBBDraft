@@ -40,9 +40,11 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
+import java.util.Locale
 
 
 class UploadDatabase : AppCompatActivity() {
@@ -67,98 +69,16 @@ class UploadDatabase : AppCompatActivity() {
         setContentView(view)
 
         binding.uploadDatabase.setOnClickListener {
-            //
-            progresBar = 0
-
-            setupCSV()
-            val pajaks = db.PBBDao().getPajaksnow(SimpleSQLiteQuery("SELECT * FROM pajakPBB"))
-            val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "backup" + System.currentTimeMillis().toString() + ".xlsx"
-
-            val xlWb = XSSFWorkbook()
-            //Instantiate Excel worksheet:
-            val xlWs = xlWb.createSheet()
-
-            binding.progressBarSecondary.min = 0
-            binding.progressBarSecondary.max = pajaks.size
-
-            //Write text value to cell located at ROW_NUMBER / COLUMN_NUMBER:
-
-            pajaks.forEachIndexed { index, element ->
-                val row = xlWs.createRow(index)
-                binding.progressBarSecondary.progress++
-                binding.textViewPrimary.setText("Eksporting data ${index} dari ${pajaks.size}")
-                row.createCell(0).setCellValue(element.no.toString())
-                row.createCell(1).setCellValue(element.NOP)
-                row.createCell(2).setCellValue(element.blok.toString())
-                row.createCell(3).setCellValue(element.persil)
-                row.createCell(4).setCellValue(element.namaWajibPajak)
-                row.createCell(5).setCellValue(element.alamatWajibPajak)
-                row.createCell(6).setCellValue(element.alamatObjekPajak)
-                row.createCell(7).setCellValue(element.kelas)
-                row.createCell(8).setCellValue(element.luasObjekPajak.toString())
-                row.createCell(9).setCellValue(element.pajakDitetapkan.toString())
-                row.createCell(10).setCellValue(element.sejarahObjekPajak)
-                row.createCell(11).setCellValue(element.lat.toString())
-                row.createCell(12).setCellValue(element.lng.toString())
-                row.createCell(13).setCellValue(element.statusPembayaranPajak.toString())
-            }
-
-            //Write file:
-            val outputStream = FileOutputStream(mFilePath)
-            xlWb.write(outputStream)
-            xlWb.close()
-
-            binding.textViewPrimary.setText("Eksport data Sukses")
-            /*
-
-
-
-            csvPrinter.flush()
-            csvPrinter.close()
-            csvReader {  }*/
-            CoroutineScope(Dispatchers.IO).launch {
-                GoogleSignIn.getLastSignedInAccount(this@UploadDatabase)?.let { googleAccount ->
-
-                    // get credentials
-                    val credential = GoogleAccountCredential.usingOAuth2(
-                        this@UploadDatabase, listOf(DriveScopes.DRIVE, DriveScopes.DRIVE_FILE)
-                    )
-                    credential.selectedAccount = googleAccount.account!!
-
-                    // get Drive Instance
-                    val drive = Drive
-                        .Builder(
-                            AndroidHttp.newCompatibleTransport(),
-                            JacksonFactory.getDefaultInstance(),
-                            credential
-                        )
-                        .setApplicationName("PBB Draft")
-                        .build()
-
-                    val gFolder = com.google.api.services.drive.model.File()
-                    // Set file name and MIME
-                    gFolder.name = "My Cool Folder Name"
-                    gFolder.mimeType = "application/vnd.google-apps.folder"
-
-                    // You can also specify where to create the new Google folder
-                    // passing a parent Folder Id
-                    val parents: MutableList<String> = ArrayList(1)
-                    parents.add("My Cool Folder Name")
-                    gFolder.parents = parents
-                    //drive.Files().create(gFolder).setFields("id").execute()
-
-                    val gfile = com.google.api.services.drive.model.File()
-                    val fileContent = FileContent("application/vnd.ms-excel", File(mFilePath))
-                    gfile.name = "backup" + System.currentTimeMillis().toString() + ".xlsx"
-                    drive.Files().create(gfile, fileContent).setFields("id").execute()
-
-                }
-            }
+            exportDatabase()
         }
         binding.importDatabase.setOnClickListener {
             progresBar = 0
             resultLauncher.launch("*/*")
             //openFile()
+        }
+        binding.backupDatabase.setOnClickListener {
+            val mFilePath: String = exportDatabase()
+            uploadGoogleDrive(mFilePath)
         }
     }
 
@@ -169,6 +89,99 @@ class UploadDatabase : AppCompatActivity() {
         }
     }
 
+    private fun exportDatabase(): String{
+        progresBar = 0
+
+        setupCSV()
+        val pajaks = db.PBBDao().getPajaksnow(SimpleSQLiteQuery("SELECT * FROM pajakPBB"))
+        val date = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.US).format(System.currentTimeMillis())
+        val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "backup" + date.toString() + ".xlsx"
+
+        val xlWb = XSSFWorkbook()
+        //Instantiate Excel worksheet:
+        val xlWs = xlWb.createSheet()
+
+        binding.progressBarSecondary.min = 0
+        binding.progressBarSecondary.max = pajaks.size
+
+        //Write text value to cell located at ROW_NUMBER / COLUMN_NUMBER:
+
+        pajaks.forEachIndexed { index, element ->
+            val row = xlWs.createRow(index)
+            binding.progressBarSecondary.progress++
+            binding.textViewPrimary.setText("Eksporting data ${index} dari ${pajaks.size}")
+            row.createCell(0).setCellValue(element.no.toString())
+            row.createCell(1).setCellValue(element.NOP)
+            row.createCell(2).setCellValue(element.blok.toString())
+            row.createCell(3).setCellValue(element.persil)
+            row.createCell(4).setCellValue(element.namaWajibPajak)
+            row.createCell(5).setCellValue(element.alamatWajibPajak)
+            row.createCell(6).setCellValue(element.alamatObjekPajak)
+            row.createCell(7).setCellValue(element.kelas)
+            row.createCell(8).setCellValue(element.luasObjekPajak.toString())
+            row.createCell(9).setCellValue(element.pajakDitetapkan.toString())
+            row.createCell(10).setCellValue(element.sejarahObjekPajak)
+            row.createCell(11).setCellValue(element.lat.toString())
+            row.createCell(12).setCellValue(element.lng.toString())
+            row.createCell(13).setCellValue(element.statusPembayaranPajak.toString())
+        }
+
+        //Write file:
+        val outputStream = FileOutputStream(mFilePath)
+        xlWb.write(outputStream)
+        xlWb.close()
+        return  mFilePath
+
+        binding.textViewPrimary.setText("Eksport data Sukses")
+        /*
+
+
+
+        csvPrinter.flush()
+        csvPrinter.close()
+        csvReader {  }*/
+    }
+
+    private fun uploadGoogleDrive(mFilePath: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            GoogleSignIn.getLastSignedInAccount(this@UploadDatabase)?.let { googleAccount ->
+
+                // get credentials
+                val credential = GoogleAccountCredential.usingOAuth2(
+                    this@UploadDatabase, listOf(DriveScopes.DRIVE, DriveScopes.DRIVE_FILE)
+                )
+                credential.selectedAccount = googleAccount.account!!
+
+                // get Drive Instance
+                val drive = Drive
+                    .Builder(
+                        AndroidHttp.newCompatibleTransport(),
+                        JacksonFactory.getDefaultInstance(),
+                        credential
+                    )
+                    .setApplicationName("PBB Draft")
+                    .build()
+
+                val gFolder = com.google.api.services.drive.model.File()
+                // Set file name and MIME
+                gFolder.name = "My Cool Folder Name"
+                gFolder.mimeType = "application/vnd.google-apps.folder"
+
+                // You can also specify where to create the new Google folder
+                // passing a parent Folder Id
+                val parents: MutableList<String> = ArrayList(1)
+                parents.add("My Cool Folder Name")
+                gFolder.parents = parents
+                //drive.Files().create(gFolder).setFields("id").execute()
+
+                val gfile = com.google.api.services.drive.model.File()
+                val fileContent = FileContent("application/vnd.ms-excel", File(mFilePath))
+                gfile.name = "backup" + System.currentTimeMillis().toString() + ".xlsx"
+                drive.Files().create(gfile, fileContent).setFields("id").execute()
+
+            }
+        }
+    }
     private fun importDatabase(uri: Uri){
         db.PBBDao().deletePajakAll()
         db.PBBDao().resetPrimaryKey()

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.Home"
-    android:padding="15dp"
+    android:padding="18dp"
     android:background="@color/white">
 
     <TextView
@@ -102,13 +102,13 @@
         android:text="- Petak"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="Total Pajak Yang Sudah Terbayar"
+        android:text="Total Pajak Sudah Terbayar"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -136,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="Total Pajak Yang Belum Terbayar"
+        android:text="Total Pajak Belum Terbayar"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"

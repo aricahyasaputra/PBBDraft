@@ -37,11 +37,6 @@
 <script>
 	var params = new URLSearchParams(window.location.search)
     var blokPeta = params.get("blok")
-	var dataPajak = JSON.parse(Android.tampilkanString(blokPeta))
-
-
-    //console.log(blokPeta);
-
 
 	const map = L.map('map', {
 		crs: L.CRS.Simple,
@@ -50,38 +45,25 @@
 		zoomDelta: 0.1
 	});
 
+	map.attributionControl.setPrefix(false)
+
+	var layerGroup = L.layerGroup().addTo(map);
 	const bounds = [[0,0], [2000, 2000]];
 	const image = L.imageOverlay(`/assets/javascriptMap/res/${blokPeta}.jpg`, bounds).addTo(map);
 
 	map.setView([968, 1064], -2);
+	tampilkanMarker(968, 1064)
 
-	//map.on("click", function(e){
-		//new L.Marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-		//console.log([e.latlng.lat, e.latlng.lng])
-		//})
-	//const sol = L.latLng([1610.25,1119.0]);
-	//const marker = L.marker(sol).addTo(map);
-	//var blok = [6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-	//var koordinatBlok = [[483.5, 490.5], [621, 707], [1035, 765], [1218, 1017], [1584, 1418], [1586, 1702], [1398, 1516], [1174, 1236], [1086, 1502], [930, 1124], [626, 1126], [322, 868], [310, 580]]
-	
-	
+	map.on('drag', function (e) {
+		layerGroup.clearLayers();
+        currentCenter = e.target.getCenter();
+        tampilkanMarker(currentCenter.lat, currentCenter.lng)
+    })
 
-	//const baseUrl = 'http://localhost:8383/'
-
-	//async function getMarker(){
-		//e.preventDefault()
-		//await fetch( baseUrl + `${blokPeta}`,
-		//{
-			//method: 'GET'
-		//}).then(res => res.json())
-  		//.then(json => tampilkanMarker(json));
-	//}
-
-	//getMarker();
-	tampilkanMarker()
-	function tampilkanMarker(){
+	function tampilkanMarker(lat, lng){
 		//console.log(json)
-		map.setView([968, 1064], -2);
+		var dataPajak = JSON.parse(Android.tampilkanString(blokPeta, lat, lng))
+		//map.setView([968, 1064], -2);
 		dataPajak.forEach((data) => {
 			if(data.lat!=0||data.lng!=0) new L.Marker([data.lat, data.lng]).bindPopup(`<label>NOP : ${data.NOP}</label><br>`+
 			`<label>Nama : ${data.namaWajibPajak}</label><br>` +
@@ -91,19 +73,8 @@
             {
                 permanent: true,
                 direction: 'center'
-            }).addTo(map);
+            }).addTo(layerGroup);
 		})
-
-		// $(".marker-display-button").click(function () {
-        //     //console.log(tempMarker._latlng.lat);
-        //     //dataString = [tempMarker._latlng.lat,tempMarker._latlng.lng] ; // array?
-        //     //var jsonString = JSON.stringify(dataString);
-        //     console.log("Berhasil")
-        // });
-		// for(let i = 0;i<blok.length;i++){
-		// 	
-		// }
-		// 
 
 	}
 

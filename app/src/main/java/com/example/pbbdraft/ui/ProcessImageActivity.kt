@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.documentfile.provider.DocumentFile
 import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityProcessImageBinding
 import com.google.mlkit.vision.common.InputImage
@@ -26,7 +27,6 @@ class ProcessImageActivity : AppCompatActivity() {
         binding.simpandanocr.setOnClickListener {
             val cropped: Bitmap? = binding.cropImageView.getCroppedImage()
             detectTextInOcr(cropped)
-
         }
     }
     private fun detectTextInOcr(bitmap: Bitmap?){
@@ -50,6 +50,7 @@ class ProcessImageActivity : AppCompatActivity() {
                                     Intent(applicationContext, SearchActivity::class.java)
                                         .putExtra("NOP", text)
                                         .putExtra("intent_type", 1)
+                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 )
                             }
                             Log.i("Detected Text", "detectTextInOcr: $text")
@@ -72,6 +73,15 @@ class ProcessImageActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+    }
 
+    override fun onDestroy() {
+        val uri = Uri.parse(intent.getStringExtra("imageUri"))
+        super.onDestroy()
+        val file = DocumentFile.fromSingleUri(applicationContext, uri)
+        if (file != null) {
+            val resolver = applicationContext.contentResolver
+            resolver.delete(uri, null, null)
+        }
     }
 }

@@ -38,6 +38,8 @@
 	});
 	//var nilaiString = JSON.parse(Android.tampilkanString())
 
+	map.attributionControl.setPrefix(false)
+
 	//console.log(nilaiString[0].NOP)
 	const bounds = [[0,0], [2000, 2000]];
 	const image = L.imageOverlay('/assets/javascriptMap/res/peta-blok-lengkap.jpg', bounds).addTo(map);

@@ -48,6 +48,8 @@
 	const bounds = [[0,0], [2000, 2000]];
 	const image = L.imageOverlay(`/assets/javascriptMap/res/${blokPeta}.jpg`, bounds).addTo(map);
 
+	map.attributionControl.setPrefix(false)
+
 	map.setView([968, 1064], -2);
 
 </script>

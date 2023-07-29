@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+    <title>CRS.Simple example - Leaflet</title>
+
+
+    <link rel="stylesheet" href="leaflet\leaflet.css" />
+    <script src="leaflet\leaflet.js"></script>
+    <!-- <script src="jQuery\jquery-3.6.4.min.js"></script> -->
+
+    <style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 400px;
+			width: 600px;
+			max-width: 100%;
+			max-height: 100%;
+		}
+	</style>
+
+    <style>body { padding: 0; margin: 0; } #map { height: 100%; width: 100vw; }</style>
+
+
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+    var dataPajak = JSON.parse(Android.tampilkanString())
+
+	const map = L.map('map', {
+		crs: L.CRS.Simple,
+		minZoom: -4,
+		zoomControl: false
+	});
+
+	map.attributionControl.setPrefix(false)
+	console.log(dataPajak[0].no)
+
+	const bounds = [[0,0], [2000, 2000]];
+	const image = L.imageOverlay(`/assets/javascriptMap/res/${dataPajak[0].blok}.jpg`, bounds).addTo(map);
+
+	tampilkanMarker()
+
+	function tampilkanMarker(){
+		if(dataPajak[0].lat!=0||dataPajak[0].lng!=0){
+			map.setView([dataPajak[0].lat, dataPajak[0].lng], -3);
+			new L.Marker([dataPajak[0].lat, dataPajak[0].lng]).addTo(map);
+	    }else{
+	        map.setView([968, 1064], -3);
+	    }
+	}
+
+</script>
+
+
+
+</body>
+</html>

@@ -18,8 +18,11 @@ import kotlinx.coroutines.launch
 import com.example.pbbdraft.databinding.ActivityEditBinding
 import com.example.pbbdraft.room.PBB
 import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfReader
+import com.itextpdf.text.pdf.PdfTemplate
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.FileOutputStream
+import java.io.InputStream
 
 
 class EditActivity : AppCompatActivity() {
@@ -137,14 +140,14 @@ class EditActivity : AppCompatActivity() {
     }
 
     private fun savePDF(){
+
         val mDoc = com.itextpdf.text.Document()
         val mFileName = binding.editTextNamaWajibPajak.text.toString();
-
         val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + mFileName + System.currentTimeMillis().toString()+ ".pdf"
 
         try {
-            PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
+
             mDoc.add(Paragraph("NOP :" + binding.editTextNOP.text.toString()))
             mDoc.add(Paragraph("Blok : " + binding.editTextBlok.text.toString()))
             mDoc.add(Paragraph("Persil : " + binding.editTextPersil.text.toString()))

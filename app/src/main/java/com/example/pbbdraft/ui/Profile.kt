@@ -31,7 +31,7 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 
 class Profile : Fragment() {
-    private val STORAGE_CODE = 1002
+
     private lateinit var binding: FragmentProfileBinding
     val db by lazy { PBBDB(requireContext()) }
     override fun onCreateView(

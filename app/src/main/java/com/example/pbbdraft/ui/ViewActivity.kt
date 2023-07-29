@@ -1,19 +1,28 @@
 package com.example.pbbdraft.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
+import android.webkit.JavascriptInterface
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.webkit.WebViewAssetLoader
 import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityViewBinding
+import com.example.pbbdraft.mapdata.main
 import com.example.pbbdraft.room.PBBDB
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
@@ -22,6 +31,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.FileOutputStream
 
+class WebAppInterfaceView(val appContext: Context, val id: Int) {
+    val db by lazy { PBBDB(appContext) }
+
+    @JavascriptInterface
+    fun tampilkanString() :String{
+        val pajaks = db.PBBDao().getPajaknow(SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE no=$id"))
+        val pajaksConvert = mutableListOf<String>()
+        pajaksConvert.add(main(pajaks.no, pajaks.NOP, pajaks.blok, pajaks.persil, pajaks.namaWajibPajak, pajaks.alamatWajibPajak, pajaks.alamatObjekPajak, pajaks.kelas, pajaks.luasObjekPajak, pajaks.pajakDitetapkan, pajaks.sejarahObjekPajak, pajaks.lat, pajaks.lng))
+        Log.i("Hasil Convert", "tampilkanString: $pajaksConvert")
+
+        return pajaksConvert.toString()
+    }
+
+}
 class ViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewBinding
     val db by lazy { PBBDB(this) }
@@ -35,7 +58,30 @@ class ViewActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
+        binding.webView.webViewClient = WebViewClient()
+
+        val assetLoader = WebViewAssetLoader.Builder()
+            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
+            .build()
+        binding.webView.webViewClient = object : WebViewClient() {
+            override fun shouldInterceptRequest(
+                view: WebView,
+                request: WebResourceRequest
+            ): WebResourceResponse? {
+                return assetLoader.shouldInterceptRequest(request.url)
+            }
+        }
+        binding.webView.settings.safeBrowsingEnabled = false
+        binding.webView.settings.setSupportZoom(true)
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.domStorageEnabled = true
+
         getPajak()
+
+        binding.webView.addJavascriptInterface(WebAppInterfaceView(this, pajakId), "Android")
+        binding.webView.loadUrl("https://appassets.androidplatform.net/assets/javascriptMap/personal-view.html")
+
         binding.buttonUpdate.setOnClickListener {
             startActivity(
                 Intent(applicationContext, EditActivity::class.java)
@@ -67,6 +113,12 @@ class ViewActivity : AppCompatActivity() {
                     binding.buttonBatalBayar.text = "Sudah Bayar"
                 }
             }
+        }
+
+        binding.buttonSejarahTanah.setOnClickListener {
+            startActivity(
+                Intent(applicationContext, SejarahTanahActivity::class.java)
+            )
         }
     }
 

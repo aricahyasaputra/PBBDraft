@@ -31,7 +31,7 @@ class PBBAdapter (private val pajaks: ArrayList<PBB>, private val listener: OnAd
         }
 
         when (this.intent_type){
-            Constant.TYPE_EKSPORT -> {
+            Constant.TYPE_EKSPORT, Constant.TYPE_CHECK_IS_PAJAK_BELUM_TERBAYAR, Constant.TYPE_CHECK_IS_PAJAK_TERBAYAR -> {
                 holder.binding.iconDelete.visibility = View.GONE
                 holder.binding.iconEdit.visibility = View.GONE
             }

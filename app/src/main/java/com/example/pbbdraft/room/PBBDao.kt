@@ -39,6 +39,9 @@ interface PBBDao {
     fun getPajaksnow(query: SupportSQLiteQuery): List<PBB>
 
     @RawQuery
+    fun getPajaknow(query: SupportSQLiteQuery): PBB
+
+    @RawQuery
     suspend fun getPajak(query: SupportSQLiteQuery): List<PBB>
 
     @RawQuery

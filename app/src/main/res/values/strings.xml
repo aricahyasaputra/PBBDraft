@@ -21,5 +21,6 @@
     <string-array name="filter_type">
         <item>Nama</item>
         <item>NOP</item>
+        <item>Blok</item>
     </string-array>
 </resources>

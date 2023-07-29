@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -29,6 +30,8 @@ class SejarahTanahActivity : AppCompatActivity() {
         setContentView(view)
         setupRecyclerView()
         setupSearchSejarah()
+        binding.tvEmptySearch.visibility = View.GONE
+
         binding.fabTambahSejarah.setOnClickListener {
             intentEdit(0, Constant.TYPE_CREATE)
         }
@@ -106,9 +109,19 @@ class SejarahTanahActivity : AppCompatActivity() {
     private fun setupSearchSejarah(){
         binding.buttonSearch.setOnClickListener {
             val sejarahDicari:String = binding.editTextSejarahDicari.text.toString()
+            if(sejarahDicari.isBlank() || sejarahDicari.isEmpty()){
+                binding.layoutEditTextSejarahDicari.error = "Input Kosong"
+            }else{
+                binding.layoutEditTextSejarahDicari.error = null
+            }
             CoroutineScope(Dispatchers.IO).launch{
                 val sejarah = db.PBBDao().searchSejarah(SimpleSQLiteQuery("SELECT * FROM sejarahPBB WHERE namaObjekPajak like '%${sejarahDicari}%'"))
                 withContext(Dispatchers.Main){
+                    if (sejarah.isEmpty()){
+                        binding.tvEmptySearch.visibility = View.VISIBLE
+                    }else{
+                        binding.tvEmptySearch.visibility = View.GONE
+                    }
                     SejarahAdapter.setData( sejarah )
                 }
             }

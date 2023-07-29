@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.SejarahEditActivity"
     android:background="@color/white"
-    android:padding="10dp">
+    android:padding="18dp">
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout_nomor_urut"
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_margin="10dp"
+    android:layout_marginVertical="10dp"
     android:padding="5dp"
     android:background="@drawable/bg_light_green_rectangle_cornered">
 
@@ -28,6 +28,7 @@
         android:textSize="12sp"
         android:layout_marginStart="10dp"
         android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/nomor_urut"
         app:layout_constraintTop_toTopOf="parent"

@@ -34,7 +34,6 @@ class PetaBlokFullscreenActivity : AppCompatActivity() {
         binding.webView.settings.setSupportZoom(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
-        binding.webView.addJavascriptInterface(WebAppInterface( this), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/javascriptMap/peta-blok-lengkap-fullscreen.html")
     }
 
