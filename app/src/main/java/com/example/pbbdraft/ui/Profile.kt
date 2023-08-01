@@ -13,6 +13,7 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
+import androidx.sqlite.db.SimpleSQLiteQuery
 import coil.load
 import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.FragmentProfileBinding
@@ -49,11 +50,11 @@ class Profile : Fragment() {
 
     private fun setupView(){
         val profile = db.PBBDao().getProfile()
-        binding.namaLengkap.text = profile[0].nama
-        binding.email.text = profile[0].email
-        binding.profilePicture.load(profile[0].url)
+        binding.namaLengkap.text = profile.nama
+        binding.email.text = profile.email
+        binding.profilePicture.load(profile.url)
 
-        if (profile[0].nama == "Guest"){
+        if (profile.nama == "Guest"){
             binding.buttonLogout.visibility = View.GONE
             binding.buttonBackup.isEnabled = false
         }else{
@@ -82,7 +83,7 @@ class Profile : Fragment() {
             mGoogleSignInClient.signOut().addOnCompleteListener{
                 CoroutineScope(Dispatchers.IO).launch {
                     db.PBBDao().updateProfile(
-                        Profile(1, "Guest", "Guest", "Guest")
+                        Profile(1, "Guest", "Guest", "Guest", 0.toString().toFloat(), 0.toString().toFloat(), 0.toString().toInt(), "Kosong", "Kosong", "Kosong")
                     )
                 }
                 val intent = Intent(context, LoginActivity::class.java)

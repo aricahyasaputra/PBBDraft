@@ -37,6 +37,7 @@
 <script>
 	var params = new URLSearchParams(window.location.search)
 	var blokPeta = params.get("blok")
+	var mode = Android.getMapMode()
 
 	const map = L.map('map', {
 		crs: L.CRS.Simple,
@@ -51,6 +52,18 @@
 	map.attributionControl.setPrefix(false)
 
 	map.setView([968, 1064], -2);
+	if(mode == "getKoordinate"){
+	var layerGroup = L.layerGroup().addTo(map);
+		map.on("click", function(e){
+			layerGroup.clearLayers();
+			new L.Marker([e.latlng.lat, e.latlng.lng]).bindPopup(
+			`<label>Blok : ${blokPeta}</label><br>`+
+			`<label>Latitude : ${e.latlng.lat}</label><br>`+
+			`<label>Longitude : ${e.latlng.lng}</label><br>`+
+			`<input type='button' value='Submit Koordinat' onclick="Android.returnLatLngBlokValue(${e.latlng.lat}, ${e.latlng.lng}, ${blokPeta})"/>`).addTo(layerGroup).openPopup();
+			console.log(`${e.latlng.lat} ${e.latlng.lng}`)
+		})
+	}
 
 </script>
 

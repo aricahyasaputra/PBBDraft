@@ -14,6 +14,12 @@ interface PBBDao {
     @Update
     suspend fun updateProfile(profile: Profile)
 
+    @Query("UPDATE temp SET lat=:lat, lng=:lng, blok=:blok")
+    fun updateLatLng(lat: Float, lng: Float, blok: Int)
+
+    @Query("UPDATE temp SET NOP=:NOP, alamatWajibPajak=:alamatWajibPajak, alamatObjekPajak=:alamatObjekPajak")
+    fun updateDetectionText(NOP: String, alamatWajibPajak: String, alamatObjekPajak: String)
+
     @Update
     suspend fun updatePajak(pajak: PBB)
 
@@ -33,7 +39,7 @@ interface PBBDao {
     suspend fun getPajaks(query: SupportSQLiteQuery): List<PBB>
 
     @Query("SELECT * FROM temp WHERE id=1")
-    fun getProfile(): List<Profile>
+    fun getProfile(): Profile
 
     @RawQuery
     fun getPajaksnow(query: SupportSQLiteQuery): List<PBB>

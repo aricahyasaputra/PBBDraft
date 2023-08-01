@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.pbbdraft.databinding.ActivityLoginBinding
 import com.example.pbbdraft.room.PBBDB
 import com.example.pbbdraft.room.Profile
@@ -53,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonGuest.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 db.PBBDao().updateProfile(
-                    Profile(1,"Guest","Guest", "Guest")
+                    Profile(1, "Guest", "Guest", "Guest", 0.toString().toFloat(), 0.toString().toFloat(), 0.toString().toInt(), "Kosong", "Kosong", "Kosong")
                 )
             }
             startActivity(
@@ -93,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
             // Signed in successfully, show authenticated UI.
             CoroutineScope(Dispatchers.IO).launch {
                 db.PBBDao().updateProfile(
-                    Profile(1, account.displayName?:"Guest", account.email?:"Guest", account.photoUrl.toString())
+                    Profile(1, account.displayName?:"Guest", account.email?:"Guest", account.photoUrl.toString(), 0.toString().toFloat(), 0.toString().toFloat(), 0.toString().toInt(), "Kosong", "Kosong", "Kosong")
                 )
             }
             startActivity(

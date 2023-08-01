@@ -9,5 +9,11 @@ data class Profile (
     val id: Int,
     val nama: String,
     val email: String,
-    val url: String
+    val url: String,
+    val lat: Float,
+    val lng: Float,
+    val blok: Int,
+    val NOP: String,
+    val alamatWajibPajak: String,
+    val alamatObjekPajak: String
 )

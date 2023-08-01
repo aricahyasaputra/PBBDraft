@@ -63,7 +63,6 @@ class UploadDatabase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upload_database)
         binding = ActivityUploadDatabaseBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)

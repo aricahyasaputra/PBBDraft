@@ -114,10 +114,11 @@ class CameraActivity : AppCompatActivity() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    Log.d("Camera SUccer", msg)
+                    val intentType = intent.getStringExtra("intent_type")
                     val intent = Intent(applicationContext, ProcessImageActivity::class.java)
-                    intent.putExtra("imageUri", output.savedUri.toString())
+                    intent.putExtra("imageUri", output.savedUri.toString()).putExtra("intent_type", intentType)
                     startActivity(intent)
+                    finish()
                 }
             }
         )

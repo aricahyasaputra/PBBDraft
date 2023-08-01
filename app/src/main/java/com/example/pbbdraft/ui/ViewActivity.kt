@@ -22,6 +22,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.webkit.WebViewAssetLoader
 import com.example.pbbdraft.R
 import com.example.pbbdraft.databinding.ActivityViewBinding
+import com.example.pbbdraft.javascriptinterface.WebAppInterfaceView
 import com.example.pbbdraft.mapdata.main
 import com.example.pbbdraft.room.PBBDB
 import com.itextpdf.text.Paragraph
@@ -31,20 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.FileOutputStream
 
-class WebAppInterfaceView(val appContext: Context, val id: Int) {
-    val db by lazy { PBBDB(appContext) }
 
-    @JavascriptInterface
-    fun tampilkanString() :String{
-        val pajaks = db.PBBDao().getPajaknow(SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE no=$id"))
-        val pajaksConvert = mutableListOf<String>()
-        pajaksConvert.add(main(pajaks.no, pajaks.NOP, pajaks.blok, pajaks.persil, pajaks.namaWajibPajak, pajaks.alamatWajibPajak, pajaks.alamatObjekPajak, pajaks.kelas, pajaks.luasObjekPajak, pajaks.pajakDitetapkan, pajaks.sejarahObjekPajak, pajaks.lat, pajaks.lng))
-        Log.i("Hasil Convert", "tampilkanString: $pajaksConvert")
-
-        return pajaksConvert.toString()
-    }
-
-}
 class ViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewBinding
     val db by lazy { PBBDB(this) }

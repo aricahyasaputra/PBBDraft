@@ -53,8 +53,39 @@ class EditActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
 
-    fun setupView(){
+        val profile = db.PBBDao().getProfile()
+
+        if(profile.blok != 0){
+            binding.editTextBlok.setText( profile.blok.toString() )
+        }
+        if(profile.lat.toString() != "0.0"){
+            binding.editTextLat.setText( profile.lat.toString() )
+        }
+        if(profile.lng.toString() != "0.0"){
+            binding.editTextLng.setText( profile.lng.toString() )
+        }
+        if(profile.alamatWajibPajak != "Kosong"){
+            //Log.i("hasil", "onResume: ${profile.alamatWajibPajak}")
+            binding.editTextAlamatWajibPajak.setText( profile.alamatWajibPajak )
+        }
+        if(profile.alamatObjekPajak != "Kosong"){
+            binding.editTextAlamatObjekPajak.setText( profile.alamatObjekPajak )
+        }
+        if(profile.NOP != "Kosong"){
+            binding.editTextNOP.setText( profile.NOP )
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        db.PBBDao().updateLatLng(0.toString().toFloat(), 0.toString().toFloat(), 0.toString().toInt())
+        db.PBBDao().updateDetectionText("Kosong", "Kosong", "Kosong")
+    }
+
+    private fun setupView(){
         val intentType = intent.getIntExtra("intent_type", 0)
         when (intentType){
             Constant.TYPE_CREATE -> {
@@ -72,17 +103,61 @@ class EditActivity : AppCompatActivity() {
                 getPajak()
             }
         }
+        binding.editTextJenisPbb.isEnabled = false
     }
 
-    fun setupListener(){
+    private fun setupListener(){
         binding.buttonSave.setOnClickListener{
-            CoroutineScope(Dispatchers.Main).launch{
-                db.PBBDao().addPajak(
-                    PBB(0, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat(), 0)
-                )
-                finish()
+            erorrCheckingTextInput()
+
+            if(binding.editTextNOP.text.toString().isNotBlank() && binding.editTextNOP.text.toString().isNotEmpty()
+                && binding.editTextPersil.text.toString().isNotBlank() && binding.editTextPersil.text.toString().isNotEmpty()
+                && binding.editTextAlamatObjekPajak.text.toString().isNotBlank() && binding.editTextAlamatObjekPajak.text.toString().isNotEmpty()
+                && binding.editTextLat.text.toString().isNotBlank() && binding.editTextLat.text.toString().isNotEmpty()
+                && binding.editTextLng.text.toString().isNotBlank() && binding.editTextLng.text.toString().isNotEmpty()
+                && binding.editTextBlok.text.toString().isNotBlank() && binding.editTextBlok.text.toString().isNotEmpty() && binding.editTextBlok.text.toString() != "0"
+                && binding.editTextNamaWajibPajak.text.toString().isNotBlank() && binding.editTextNamaWajibPajak.text.toString().isNotEmpty()
+                && binding.editTextAlamatWajibPajak.text.toString().isNotBlank() && binding.editTextAlamatWajibPajak.text.toString().isNotEmpty()
+                && binding.editTextLuas.text.toString().isNotBlank() && binding.editTextLuas.text.toString().isNotEmpty()
+                && binding.editTextKelas.text.toString().isNotBlank() && binding.editTextKelas.text.toString().isNotEmpty()
+                && binding.editTextTotalWajibPajak.text.toString().isNotBlank() && binding.editTextTotalWajibPajak.text.toString().isNotEmpty()
+                && binding.editTextSejarahPajak.text.toString().isNotBlank() && binding.editTextSejarahPajak.text.toString().isNotEmpty()
+            ){
+                CoroutineScope(Dispatchers.Main).launch{
+                    db.PBBDao().addPajak(
+                        PBB(0, binding.editTextNOP.text.toString(), binding.editTextBlok.text.toString().toInt(), binding.editTextPersil.text.toString(), binding.editTextNamaWajibPajak.text.toString(), binding.editTextAlamatWajibPajak.text.toString(), binding.editTextAlamatObjekPajak.text.toString(), binding.editTextKelas.text.toString(), binding.editTextLuas.text.toString().toInt(), binding.editTextTotalWajibPajak.text.toString().toInt(), binding.editTextSejarahPajak.text.toString(), binding.editTextLat.text.toString().toFloat(), binding.editTextLng.text.toString().toFloat(), 0)
+                    )
+                    finish()
+                }
+            }else{
+                Toast.makeText(this, "Gagal menambahkan data, mohon periksa masukan anda", Toast.LENGTH_SHORT).show()
             }
+
         }
+
+        binding.textInputLayoutAlamatWajibPajak.setEndIconOnClickListener{
+            //Toast.makeText(this, "Tombol qr ditekan", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@EditActivity, CameraActivity::class.java)
+                .putExtra("intent_type", "AlamatWajibPajak")
+            startActivity(intent)
+        }
+        binding.textInputLayoutAlamatObjekPajak.setEndIconOnClickListener {
+            val intent = Intent(this@EditActivity, CameraActivity::class.java)
+                .putExtra("intent_type", "AlamatObjekPajak")
+            startActivity(intent)
+        }
+
+        binding.textInputLayoutNOP.setEndIconOnClickListener {
+            val intent = Intent(this@EditActivity, CameraActivity::class.java)
+                .putExtra("intent_type", "NOP")
+            startActivity(intent)
+        }
+
+        binding.ivGetKoordinat.setOnClickListener {
+            val intent = Intent(this@EditActivity, KoordinatActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.buttonUpdate.setOnClickListener{
             CoroutineScope(Dispatchers.Main).launch{
                 //, blok=:${binding.editTextBlok.text}, persil=:${binding.editTextPersil.text}, namaWajibPajak=:${binding.editTextNamaWajibPajak.text}, alamatWajibPajak=:${binding.editTextAlamatWajibPajak.text}, alamatObjekPajak=:${binding.editTextAlamatObjekPajak.text}, kelas=:${binding.editTextKelas.text}, luasObjekPajak=:${binding.editTextLuas.text}, pajakDitetapkan=:${binding.editTextTotalWajibPajak.text}, sejarahObjekPajak=:${binding.editTextSejarahPajak.text}, lat=:${binding.editTextLat.text.toString().toFloat()}, lng=:${binding.editTextLng.text.toString().toFloat()}
@@ -98,7 +173,7 @@ class EditActivity : AppCompatActivity() {
             setupPDF()
         }
     }
-    fun getPajak(){
+    private fun getPajak(){
         pajakId = intent.getIntExtra("intent_id", 0)
         CoroutineScope(Dispatchers.Main).launch{
             val pajaks = db.PBBDao().getPajak( SimpleSQLiteQuery("SELECT * FROM pajakPBB WHERE no=${pajakId}") )[0]
@@ -124,7 +199,83 @@ class EditActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    fun setupPDF(){
+    private fun erorrCheckingTextInput(){
+        if(binding.editTextNOP.text.toString().isBlank() || binding.editTextNOP.text.toString().isEmpty()){
+            binding.textInputLayoutNOP.error = "NOP kosong"
+        }else if (binding.editTextNOP.text.toString().length != 10){
+            binding.textInputLayoutNOP.error = "format NOP tidak sesuai"
+        }else{
+            binding.textInputLayoutNOP.error = null
+        }
+
+        if(binding.editTextPersil.text.toString().isBlank() || binding.editTextPersil.text.toString().isEmpty()){
+            binding.textInputLayoutPersil.error = "persil kosong"
+        }else{
+            binding.textInputLayoutPersil.error = null
+        }
+
+        if(binding.editTextAlamatObjekPajak.text.toString().isBlank() || binding.editTextAlamatObjekPajak.text.toString().isEmpty()){
+            binding.textInputLayoutAlamatObjekPajak.error = "alamat objek pajak kosong"
+        }else{
+            binding.textInputLayoutAlamatObjekPajak.error = null
+        }
+
+        if(binding.editTextLat.text.toString().isBlank() || binding.editTextLat.text.toString().isEmpty() || binding.editTextLat.text.toString() == "0.0"){
+            binding.textInputLayoutLat.error = "latitude kosong"
+        }else{
+            binding.textInputLayoutLat.error = null
+        }
+
+        if(binding.editTextLng.text.toString().isBlank() || binding.editTextLng.text.toString().isEmpty() || binding.editTextLat.text.toString() == "0.0"){
+            binding.textInputLayoutLng.error = "longitude kosong"
+        }else{
+            binding.textInputLayoutLng.error = null
+        }
+
+        if(binding.editTextBlok.text.toString().isBlank() || binding.editTextBlok.text.toString().isEmpty() || binding.editTextBlok.text.toString() == "0"){
+            binding.textInputLayoutEditTextBlok.error = "blok kosong"
+        }else{
+            binding.textInputLayoutEditTextBlok.error = null
+        }
+
+        if(binding.editTextNamaWajibPajak.text.toString().isBlank() || binding.editTextNamaWajibPajak.text.toString().isEmpty()){
+            binding.textInputLayoutNamaWajibPajak.error = "nama wajib pajak kosong"
+        }else{
+            binding.textInputLayoutNamaWajibPajak.error = null
+        }
+
+        if(binding.editTextAlamatWajibPajak.text.toString().isBlank() || binding.editTextAlamatWajibPajak.text.toString().isEmpty()){
+            binding.textInputLayoutAlamatWajibPajak.error = "nama wajib pajak kosong"
+        }else{
+            binding.textInputLayoutAlamatWajibPajak.error = null
+        }
+
+        if(binding.editTextLuas.text.toString().isBlank() || binding.editTextLuas.text.toString().isEmpty()){
+            binding.textInputLayoutLuas.error = "luas kosong"
+        }else{
+            binding.textInputLayoutLuas.error = null
+        }
+
+        if(binding.editTextKelas.text.toString().isBlank() || binding.editTextKelas.text.toString().isEmpty()){
+            binding.textInputLayoutKelas.error = "kelas kosong"
+        }else{
+            binding.textInputLayoutKelas.error = null
+        }
+
+        if(binding.editTextTotalWajibPajak.text.toString().isBlank() || binding.editTextTotalWajibPajak.text.toString().isEmpty()){
+            binding.textInputLayoutTotalWajibPajak.error = "total pajak kosong"
+        }else{
+            binding.textInputLayoutTotalWajibPajak.error = null
+        }
+
+        if(binding.editTextSejarahPajak.text.toString().isBlank() || binding.editTextSejarahPajak.text.toString().isEmpty()){
+            binding.textInputLayoutSejarahPajak.error = "sejarah pajak kosong"
+        }else{
+            binding.textInputLayoutSejarahPajak.error = null
+        }
+    }
+
+    private fun setupPDF(){
         binding.buttonEksport.setOnClickListener{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                 if(checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){

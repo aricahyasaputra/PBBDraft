@@ -6,16 +6,22 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.webkit.WebViewAssetLoader
-import com.example.pbbdraft.databinding.ActivityPetaBlokFullscreenBinding
+import com.example.pbbdraft.databinding.ActivityKoordinatBinding
 import com.example.pbbdraft.javascriptinterface.KoordinateWebInterface
+import com.example.pbbdraft.room.PBBDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class PetaBlokFullscreenActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityPetaBlokFullscreenBinding
+class KoordinatActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityKoordinatBinding
+    val db by lazy { PBBDB(this) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityPetaBlokFullscreenBinding.inflate(layoutInflater)
+        binding = ActivityKoordinatBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         binding.webView.webViewClient = WebViewClient()
@@ -35,8 +41,9 @@ class PetaBlokFullscreenActivity : AppCompatActivity() {
         binding.webView.settings.setSupportZoom(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
-        binding.webView.addJavascriptInterface(KoordinateWebInterface( " ", this), "Android")
+        binding.webView.addJavascriptInterface(KoordinateWebInterface( "getKoordinate", this), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/javascriptMap/peta-blok-lengkap-fullscreen.html")
+
     }
 
     override fun onBackPressed() {
