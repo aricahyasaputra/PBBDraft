@@ -45,16 +45,16 @@ class SejarahEditActivity : AppCompatActivity() {
             Constant.TYPE_EKSPORT -> {
                 binding.buttonSave.visibility = View.GONE
                 binding.buttonUpdate.visibility = View.GONE
-                getPajak()
+                getSejarah()
             }
             Constant.TYPE_UPDATE-> {
                 binding.buttonSave.visibility = View.GONE
-                getPajak()
+                getSejarah()
             }
         }
     }
 
-    private fun getPajak(){
+    private fun getSejarah(){
         sejarahId = intent.getIntExtra("intent_id", 0)
         CoroutineScope(Dispatchers.Main).launch{
             val sejarah = db.PBBDao().getSejarah( SimpleSQLiteQuery("SELECT * FROM sejarahPBB WHERE no=${sejarahId}") )[0]

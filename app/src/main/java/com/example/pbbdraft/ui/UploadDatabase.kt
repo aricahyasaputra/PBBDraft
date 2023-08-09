@@ -79,6 +79,12 @@ class UploadDatabase : AppCompatActivity() {
             val mFilePath: String = exportDatabase()
             uploadGoogleDrive(mFilePath)
         }
+
+        val profile = db.PBBDao().getProfile()
+
+        if (profile.nama == "Guest"){
+            binding.backupDatabase.isEnabled = false
+        }
     }
 
     private fun setupCSV(){

@@ -178,7 +178,7 @@ class SearchActivity : AppCompatActivity() {
 
         }
     }
-    fun setupListener(){
+    private fun setupListener(){
         binding.buttonCreate.setOnClickListener {
             intentEdit(0, Constant.TYPE_CREATE)
         }

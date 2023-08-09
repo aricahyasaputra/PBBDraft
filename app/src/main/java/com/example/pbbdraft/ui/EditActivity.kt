@@ -44,7 +44,7 @@ class EditActivity : AppCompatActivity() {
         setupView()
         //Setup Onclick Listener tombol update/save
 
-        //setupPDF()
+        setupPDF()
         //Inisialisasi pajak id dari activity sebelumnya
         setupListener()
         //Setup Onclick Listener tombol export
@@ -169,9 +169,6 @@ class EditActivity : AppCompatActivity() {
                 finish()
             }
         }
-        binding.buttonEksport.setOnClickListener {
-            setupPDF()
-        }
     }
     private fun getPajak(){
         pajakId = intent.getIntExtra("intent_id", 0)
@@ -293,13 +290,18 @@ class EditActivity : AppCompatActivity() {
     private fun savePDF(){
 
         val mDoc = com.itextpdf.text.Document()
-        val mFileName = binding.editTextNamaWajibPajak.text.toString();
+        val mFileName = binding.editTextNamaWajibPajak.text.toString()
         val mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + mFileName + System.currentTimeMillis().toString()+ ".pdf"
 
         try {
+            PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
-
-            mDoc.add(Paragraph("NOP :" + binding.editTextNOP.text.toString()))
+            mDoc.add(Paragraph("Saya yang bertanda tangan dibawah ini :"))
+            mDoc.add(Paragraph("Nama       : Yanuar Kurniawan"))
+            mDoc.add(Paragraph("Jabatan    : Kepala Dusun Kenteng, Gading, dan Gadon"))
+            mDoc.add(Paragraph("Dengan surat ini menyatakan bahwa data yang terlampir di bawah ini : "))
+            mDoc.add(Paragraph(" "))
+            mDoc.add(Paragraph("NOP : " + binding.editTextNOP.text.toString()))
             mDoc.add(Paragraph("Blok : " + binding.editTextBlok.text.toString()))
             mDoc.add(Paragraph("Persil : " + binding.editTextPersil.text.toString()))
             mDoc.add(Paragraph("Nama Wajib Pajak : " + binding.editTextNamaWajibPajak.text.toString()))
@@ -309,6 +311,8 @@ class EditActivity : AppCompatActivity() {
             mDoc.add(Paragraph("Luas : " + binding.editTextLuas.text.toString()))
             mDoc.add(Paragraph("Jumlah Pajak : " + binding.editTextTotalWajibPajak.text.toString()))
             mDoc.add(Paragraph("Sejarah Objek Pajak : " + binding.editTextSejarahPajak.text.toString()))
+            mDoc.add(Paragraph(" "))
+            mDoc.add(Paragraph("Bahwa data tersebut BENAR adanya dan telah dilakukan pengecekan sesuai dengan prosedur yang berlaku pada wilayah Dusun Kenteng,Gading, dan Gadon."))
             mDoc.close()
             Toast.makeText(this, "$mFileName.pdf\n is create to \n$mFilePath", Toast.LENGTH_SHORT).show()
 

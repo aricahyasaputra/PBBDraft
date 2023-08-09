@@ -3,21 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
+    android:padding="18dp"
     android:background="@color/white"
     tools:context=".ui.Archive">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:text="Halaman arsip"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Peta Blok"
         android:textSize="24sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:layout_marginTop="48dp"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_petabloklengkap"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="86dp">
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/photo_view_petabloklengkap"
                 android:layout_width="match_parent"
@@ -38,13 +51,13 @@
         android:text="Peta Persil"
         android:textSize="24sp"
         android:textColor="@color/black"
-        android:layout_marginTop="300dp"/>
+        android:layout_marginTop="350dp"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_petapersillengkap"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="350dp">
+        android:layout_marginTop="386dp">
         <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/photo_view_petapersillengkap"
             android:layout_width="match_parent"

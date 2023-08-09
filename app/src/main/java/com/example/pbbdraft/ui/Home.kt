@@ -53,7 +53,7 @@ class Home : Fragment() {
         }
 
         binding.qrActivity.setOnClickListener {
-            val intent = Intent(context, CameraActivity::class.java)
+            val intent = Intent(context, CameraActivity::class.java).putExtra("intent_type", "SearchNOP")
             startActivity(intent)
         }
 

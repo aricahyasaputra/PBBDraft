@@ -42,6 +42,7 @@ class ProcessImageActivity : AppCompatActivity() {
                 recognizer.process(it)
                     .addOnSuccessListener { visionText ->
                         val builder = StringBuilder()
+                        val intentType = intent.getStringExtra("intent_type")
                         for (block in visionText.textBlocks) {
                             //val boundingBox = block.boundingBox
                             //val cornerPoints = block.cornerPoints
@@ -50,6 +51,19 @@ class ProcessImageActivity : AppCompatActivity() {
                             builder.append(text)
 
                             Log.i("Detected Text", "detectTextInOcr: $text")
+                            if(intentType=="SearchNOP") {
+                                if (text.contains("NOP")) {
+
+                                    val indexNOP = text.indexOf("NOP")
+                                    val NOPbersih = text.substring(indexNOP, text.length)
+                                    startActivity(
+                                        Intent(applicationContext, SearchActivity::class.java)
+                                            .putExtra("NOP", NOPbersih)
+                                            .putExtra("intent_type", 1)
+                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    )
+                                }
+                            }
                             /*for (line in block.lines) {
                                         // ...
                                         for (element in line.elements) {
@@ -58,17 +72,8 @@ class ProcessImageActivity : AppCompatActivity() {
                                     }*/
                         }
                         val textAkhir = builder.toString()
-                        val intentType = intent.getStringExtra("intent_type")
-                        if(intentType=="SearchNOP"){
-                            if (textAkhir.contains("NOP")){
-                                startActivity(
-                                    Intent(applicationContext, SearchActivity::class.java)
-                                        .putExtra("NOP", textAkhir)
-                                        .putExtra("intent_type", 1)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                )
-                            }
-                        }else if (intentType=="AlamatWajibPajak"){
+
+                        if (intentType=="AlamatWajibPajak"){
                             db.PBBDao().updateDetectionText("Kosong", textAkhir, "Kosong")
                             finish()
                         }else if(intentType=="AlamatObjekPajak"){

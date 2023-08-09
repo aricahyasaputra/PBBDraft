@@ -10,8 +10,7 @@ import com.example.pbbdraft.mapdata.main
 import com.example.pbbdraft.room.PBBDB
 import com.example.pbbdraft.ui.ViewActivity
 
-class WebAppInterfaceMapActivity(context: Context) {
-    val appContext : Context = context
+class WebAppInterfaceMapActivity(val appContext: Context) {
     val db by lazy { PBBDB(appContext) }
     @JavascriptInterface
     fun tampilkanString(blok: String, lat: Float, lng: Float) :String{

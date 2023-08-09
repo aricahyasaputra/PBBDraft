@@ -63,17 +63,6 @@ class Profile : Fragment() {
         }
     }
 
-    private fun View.setMargins(
-        left: Int = this.marginLeft,
-        top: Int = this.marginTop,
-        right: Int = this.marginRight,
-        bottom: Int = this.marginBottom,
-    ) {
-        layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
-            setMargins(left, top, right, bottom)
-        }
-    }
-
     private fun setupListener(){
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         // Build a GoogleSignInClient with the options specified by gso.
